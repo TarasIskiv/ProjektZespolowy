@@ -71,8 +71,8 @@ namespace FindJobWebApi.Controllers
         }
 
         [Authorize(Roles = "Company")]
-        [HttpDelete("delete")]
-        public async Task<ActionResult<string>> DeleteVacancy([FromBody] int vacancyId)
+        [HttpDelete("{id}/delete")]
+        public async Task<ActionResult<string>> DeleteVacancy([FromRoute] int id)
         {
             var currentCompany = User.Identity;
             var currentCompanyId = Int32.MinValue;
@@ -80,7 +80,7 @@ namespace FindJobWebApi.Controllers
             if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentCompanyId))
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
-            var result = _service.DeleteVacancy(currentCompanyId, vacancyId);
+            var result = _service.DeleteVacancy(currentCompanyId, id);
 
             if (result.Equals("Error"))
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
