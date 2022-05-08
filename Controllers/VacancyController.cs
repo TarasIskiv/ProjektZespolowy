@@ -71,7 +71,7 @@ namespace FindJobWebApi.Controllers
         }
 
         [Authorize(Roles = "Company")]
-        [HttpDelete("{id}/delete")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<string>> DeleteVacancy([FromRoute] int id)
         {
             var currentCompany = User.Identity;
