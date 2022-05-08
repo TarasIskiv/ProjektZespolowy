@@ -74,13 +74,22 @@ namespace FindJobWebApi.Services
             if (!string.IsNullOrEmpty(dto.LastName)) user.LastName = dto.LastName;
             if (!string.IsNullOrEmpty(dto.BirthdayDate.ToString())) user.BirthdayDate = dto.BirthdayDate;
             if (!string.IsNullOrEmpty(dto.ContactNumber)) user.ContactNumber = dto.ContactNumber;
-            if (!string.IsNullOrEmpty(dto.UserAddressId.ToString())) user.UserAddressId = dto.UserAddressId;
+            if (!IsAddressExist(dto.UserAddressId)) user.UserAddressId = dto.UserAddressId;
             if (!string.IsNullOrEmpty(dto.Gender)) user.Gender = dto.Gender;
             if (!string.IsNullOrEmpty(dto.Experience.ToString())) user.Experience = dto.Experience;
             if (!string.IsNullOrEmpty(dto.Password)) user.Password = dto.Password.getHash();
             if (!string.IsNullOrEmpty(dto.Desciption)) user.Desciption = dto.Desciption;
 
+            _context.SaveChanges();
+
             return "OK";
+        }
+
+        private bool IsAddressExist(int? addressId)
+        {
+            if (addressId == null || _context.Companies.SingleOrDefault(x => x.Id == addressId) == null)
+                return false;
+            return true;
         }
     }
 }

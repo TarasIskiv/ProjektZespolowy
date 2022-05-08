@@ -77,6 +77,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
         #region Subscribe
+
         [HttpPost("{id}/subscribe")]
         public async Task<ActionResult<string>> SubscribeToNewVacancies([FromRoute] int id)
         {
@@ -85,6 +86,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
         #region Get Company By ID
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<CompanyDTO>> GetCompanyById([FromRoute] int id)
         {
@@ -97,6 +99,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
         #region Get Companies
+        [AllowAnonymous]
         [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<CompanyDTO>>> GetAllCompanies()
         {
@@ -108,8 +111,9 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region Get List of Vacancies
+        [AllowAnonymous]
         [HttpGet("{id}/job")]
-        public async Task<ActionResult<string>> ListOfVacanciesOfCompany([FromRoute] int id)
+        public async Task<ActionResult<IEnumerable<VacancyDTO>>> ListOfVacanciesOfCompany([FromRoute] int id)
         {
             var company = _service.GetCompanyById(id);
 
@@ -117,7 +121,7 @@ namespace FindJobWebApi.Controllers
                 return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 
             var vacancies = _service.GetVacanciesByCompany(id);
-            
+
             return Ok(ResponseConvertor.GetResult("OK", vacancies));
         }
         #endregion
@@ -125,37 +129,39 @@ namespace FindJobWebApi.Controllers
         #region Get Profile
         [Authorize(Roles = "Company")]
         [HttpGet("profile")]
-        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile([FromHeader] string authorization)
+        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile()
         {
-            if(string.IsNullOrEmpty(authorization))
-            {
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
-            }
 
-            var currentId = authorization.parseToken();
+            var currentCompany = User.Identity;
+            var currentId = Int32.MinValue;
+
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
+
             var company = _service.GetProfile(currentId);
+
             if(company == null)
-            {
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
-            }
+
             return Ok(ResponseConvertor.GetResult("OK", company));
         }
         #endregion
 
         #region Add Data About Profile
+        [Authorize(Roles = "Company")]
         [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddDataAboutCompany([FromHeader]string authorization, ModifyCompanyDTO dto)
+        public async Task<ActionResult<string>> AddDataAboutCompany(ModifyCompanyDTO dto)
         {
-            //var currentProfile = User.Identity?.Name;
-            if (string.IsNullOrEmpty(authorization))
-            {
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
-            }
+            var currentCompany = User.Identity;
+            var currentId = Int32.MinValue;
 
-            var currentId = authorization.parseToken();
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
             var result = _service.AddProfile(currentId, dto);
-            if(result.Equals("Error")) return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            if(result.Equals("Error")) 
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 
             return Ok(ResponseConvertor.GetResult("OK", result));
 

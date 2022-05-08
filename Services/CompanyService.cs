@@ -21,16 +21,16 @@ namespace FindJobWebApi.Services
             var company = _context.Companies.SingleOrDefault(x => x.Id == id);
             if (company == null) return "Error";
 
-            if(!string.IsNullOrEmpty(dto.Desciption)) company.Desciption = dto.Desciption;
+            if(!string.IsNullOrEmpty(dto.Description)) company.Description = dto.Description;
             if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
-            if (!string.IsNullOrEmpty(dto.CompanyAddressId.ToString())) company.CompanyAddressId = dto.CompanyAddressId;
-            if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
 
-            if (!string.IsNullOrEmpty(dto.Password))
-            {
-                company.Password = dto.Password.getHash();
-                company.Website = dto.Website;
-            }
+            if (IsAddressExist(dto.CompanyAddressId)) company.CompanyAddressId = dto.CompanyAddressId;
+
+            if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
+            if (!string.IsNullOrEmpty(dto.Password)) company.Password = dto.Password.getHash();
+
+            _context.SaveChanges();
+
             return "OK";
         }
 
@@ -132,6 +132,13 @@ namespace FindJobWebApi.Services
         public void UploadCompanyPhoto()
         {
             throw new NotImplementedException();
+        }
+
+        private bool IsAddressExist(int? addressId)
+        {
+            if (addressId == null || _context.Companies.SingleOrDefault(x => x.Id == addressId) == null)
+                return false;
+            return true;
         }
     }
 }

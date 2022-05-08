@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace FindJobWebApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/user")]
     public class UserController : ControllerBase
     {
@@ -25,7 +24,7 @@ namespace FindJobWebApi.Controllers
             _cookieService = cookieService;
         }
 
-
+        #region Sign In
         [AllowAnonymous]
         [HttpPost("signin")]
         public async Task<ActionResult<string>> Signin([FromBody] LoginUserDTO userDTO)
@@ -52,7 +51,9 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", token));    
         }
+        #endregion
 
+        #region Sign Up
         [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<ActionResult<string>> SignUp([FromBody] CreateUserDTO userDTO)
@@ -72,8 +73,9 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
+        #endregion
 
-
+        #region Get Users
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetUserById([FromRoute] int id)
         {
@@ -84,32 +86,38 @@ namespace FindJobWebApi.Controllers
         {
             return "User List";
         }
+        #endregion
+
+        #region Get Profile
+        [Authorize(Roles="User")]
         [HttpGet("profile")]
-        public async Task<ActionResult<string>> GetUserProfile([FromHeader] string authorization)
+        public async Task<ActionResult<string>> GetUserProfile()
         {
-            //var currentUser = User.Identity;
+            var currentUser = User.Identity;
+            var currentId = Int32.MinValue;
 
-            if (string.IsNullOrEmpty(authorization))
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+            if (currentUser == null || !Int32.TryParse(currentUser.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
-            var userId = authorization.parseToken();
-
-            var user = _service.GetUser(userId);
+            var user = _service.GetUser(currentId);
 
             if(user == null)
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by user ID"));
 
             return Ok(ResponseConvertor.GetResult("OK", user));
         }
+        #endregion
+
+        #region Modify Profile
+        [Authorize(Roles = "User")]
         [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddUserData([FromHeader] string authorization, ModifyUserDTO dto)
+        public async Task<ActionResult<string>> ModifyUserProfile(ModifyUserDTO dto)
         {
-            //var currentUser = User.Identity;
+            var currentUser = User.Identity;
+            var currentId = Int32.MinValue;
 
-            if (string.IsNullOrEmpty(authorization))
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
-
-            var currentId = authorization.parseToken();
+            if (currentUser == null || !Int32.TryParse(currentUser.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
             var result = _service.AddProfile(currentId, dto);
 
@@ -119,6 +127,9 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", result));
 
         }
+        #endregion
+
+        #region CV
         [HttpGet("profile/cv/create")]
         public async Task<ActionResult<string>> CreateCVForUser()
         {
@@ -129,6 +140,6 @@ namespace FindJobWebApi.Controllers
         {
             return "UploadUserProfile";
         }
-       
+        #endregion
     }
 }

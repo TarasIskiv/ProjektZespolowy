@@ -17,7 +17,7 @@ namespace FindJobWebApi.Services
 
         public CompanyDTO GetProfile(int id);
 
-        public string AddProfile(int id,ModifyCompanyDTO dto);
+        public string AddProfile(int id, ModifyCompanyDTO dto);
 
         public void UploadCompanyPhoto();
 

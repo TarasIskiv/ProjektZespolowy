@@ -36,14 +36,11 @@ namespace FindJobWebApi.Migrations
                     b.Property<int>("VacancyId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("VacancyId1")
-                        .HasColumnType("numeric(20,0)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VacancyId1");
+                    b.HasIndex("VacancyId");
 
                     b.ToTable("Candidtates");
                 });
@@ -93,23 +90,18 @@ namespace FindJobWebApi.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddressFirst")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("AddressSecond")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -125,22 +117,20 @@ namespace FindJobWebApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BirthdayDate")
+                    b.Property<DateTime?>("BirthdayDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ContactNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Desciption")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<float>("Experience")
+                    b.Property<float?>("Experience")
                         .HasColumnType("real");
 
                     b.Property<string>("FirstName")
@@ -148,7 +138,6 @@ namespace FindJobWebApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
@@ -159,7 +148,7 @@ namespace FindJobWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserAddressId")
+                    b.Property<int?>("UserAddressId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -178,23 +167,18 @@ namespace FindJobWebApi.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddressFirst")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("AddressSecond")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -204,9 +188,11 @@ namespace FindJobWebApi.Migrations
 
             modelBuilder.Entity("FindJobWebApi.Models.Vacancy", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
                         .HasColumnType("integer");
@@ -250,7 +236,7 @@ namespace FindJobWebApi.Migrations
 
                     b.HasOne("FindJobWebApi.Models.Vacancy", "Vacancy")
                         .WithMany()
-                        .HasForeignKey("VacancyId1")
+                        .HasForeignKey("VacancyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -272,9 +258,7 @@ namespace FindJobWebApi.Migrations
                 {
                     b.HasOne("FindJobWebApi.Models.UserAddress", "UserAddress")
                         .WithMany()
-                        .HasForeignKey("UserAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserAddressId");
 
                     b.Navigation("UserAddress");
                 });

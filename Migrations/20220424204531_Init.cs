@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FindJobWebApi.Migrations
 {
-    public partial class Init1 : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,11 +16,11 @@ namespace FindJobWebApi.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Country = table.Column<string>(type: "text", nullable: false),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    AddressFirst = table.Column<string>(type: "text", nullable: false),
-                    AddressSecond = table.Column<string>(type: "text", nullable: false),
-                    PostalCode = table.Column<string>(type: "text", nullable: false)
+                    Country = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    AddressFirst = table.Column<string>(type: "text", nullable: true),
+                    AddressSecond = table.Column<string>(type: "text", nullable: true),
+                    PostalCode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,11 +33,11 @@ namespace FindJobWebApi.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Country = table.Column<string>(type: "text", nullable: false),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    AddressFirst = table.Column<string>(type: "text", nullable: false),
-                    AddressSecond = table.Column<string>(type: "text", nullable: false),
-                    PostalCode = table.Column<string>(type: "text", nullable: false)
+                    Country = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    AddressFirst = table.Column<string>(type: "text", nullable: true),
+                    AddressSecond = table.Column<string>(type: "text", nullable: true),
+                    PostalCode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,14 +75,14 @@ namespace FindJobWebApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    BirthdayDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ContactNumber = table.Column<string>(type: "text", nullable: false),
-                    UserAddressId = table.Column<int>(type: "integer", nullable: false),
-                    Gender = table.Column<string>(type: "text", nullable: false),
-                    Experience = table.Column<float>(type: "real", nullable: false),
+                    BirthdayDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ContactNumber = table.Column<string>(type: "text", nullable: true),
+                    UserAddressId = table.Column<int>(type: "integer", nullable: true),
+                    Gender = table.Column<string>(type: "text", nullable: true),
+                    Experience = table.Column<float>(type: "real", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    Desciption = table.Column<string>(type: "text", nullable: false)
+                    Desciption = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,15 +91,15 @@ namespace FindJobWebApi.Migrations
                         name: "FK_Users_UserAddresses_UserAddressId",
                         column: x => x.UserAddressId,
                         principalTable: "UserAddresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Vacancies",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CompanyId = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
@@ -126,7 +126,6 @@ namespace FindJobWebApi.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     VacancyId = table.Column<int>(type: "integer", nullable: false),
-                    VacancyId1 = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -139,8 +138,8 @@ namespace FindJobWebApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Candidtates_Vacancies_VacancyId1",
-                        column: x => x.VacancyId1,
+                        name: "FK_Candidtates_Vacancies_VacancyId",
+                        column: x => x.VacancyId,
                         principalTable: "Vacancies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -152,9 +151,9 @@ namespace FindJobWebApi.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Candidtates_VacancyId1",
+                name: "IX_Candidtates_VacancyId",
                 table: "Candidtates",
-                column: "VacancyId1");
+                column: "VacancyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Companies_CompanyAddressId",

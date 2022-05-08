@@ -11,7 +11,6 @@
         public string? Gender { get; set; }
         public float? Experience { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
         public string? Desciption { get; set; }
     }
 }
