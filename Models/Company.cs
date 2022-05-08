@@ -17,6 +17,6 @@ namespace FindJobWebApi.Models
         public string Email { get; set; } = string.Empty;
         [Required]
         public string Password { get; set; } = String.Empty;
-        public string? Desciption { get; set; }
+        public string? Description { get; set; }
     }
 }

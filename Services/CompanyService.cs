@@ -21,7 +21,7 @@ namespace FindJobWebApi.Services
             var company = _context.Companies.SingleOrDefault(x => x.Id == id);
             if (company == null) return "Error";
 
-            if(!string.IsNullOrEmpty(dto.Description)) company.Desciption = dto.Description;
+            if(!string.IsNullOrEmpty(dto.Description)) company.Description = dto.Description;
             if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
 
             if (IsAddressExist(dto.CompanyAddressId)) company.CompanyAddressId = dto.CompanyAddressId;
