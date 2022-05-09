@@ -8,8 +8,9 @@ const mainTypes = {
 };
 
 const companyTypes = {
-    getProfile: 'COMPANY/GET_PROFILE',
-    getJobs: 'COMPANY/GET_JOBS'
+    setProfile: 'COMPANY/SET_PROFILE',
+    setJobs: 'COMPANY/SET_JOBS',
+    clear: 'COMPANY/CLEAR'
 }
 
 export { mainTypes, companyTypes }

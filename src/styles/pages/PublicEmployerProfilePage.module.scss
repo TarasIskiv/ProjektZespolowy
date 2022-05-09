@@ -1,0 +1,36 @@
+.main {
+  margin-top: 10%;
+  .info {
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 330px;
+      border-radius: 50%;
+      margin-right: 40%;
+    }
+
+    div {
+      h1 {
+        text-align: center;
+        color: white;
+        font-size: 48px;
+        font-weight: 500;
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .description {
+    width: 50%;
+    margin: auto;
+    p {
+      font-size: 18px;
+      color: white;
+      text-align: center;
+    }
+  }
+  .offers {
+    margin-top: 50px;
+  }
+}

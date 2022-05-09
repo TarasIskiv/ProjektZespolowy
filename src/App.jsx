@@ -13,6 +13,7 @@ import CheckAuth from "./utils/CheckAuth";
 const SignInPage = React.lazy(() => import ('./pages/SignInPage'));
 const SignUpPage = React.lazy(() => import ('./pages/SignUpPage'));
 const ProfilePage = React.lazy(() => import ('./pages/ProfilePage'));
+const PublicEmployerProfile = React.lazy(() => import ('./pages/PublicEmployerProfile'));
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                     <Route path='/signin' element={<SignInPage />} />
                     <Route path='/signup' element={<SignUpPage />} />
                     <Route path='/profile' element={<CheckAuth><ProfilePage /></CheckAuth>} />
+                    <Route path='/company/:id' element={<CheckAuth><PublicEmployerProfile /></CheckAuth>} />
                 </Routes>
             </BrowserRouter>
         </React.Suspense>

@@ -35,7 +35,7 @@ export const SignForm = ({ title, fields, onSend, buttonTitle, isError, errorTex
               autoComplete="off" />
           </div>
         )}
-        <Button onClick={() => onSend(data)} text={buttonTitle} />
+        <Button onClick={() => onSend(data) } text={buttonTitle} />
     </div>
   )
 }

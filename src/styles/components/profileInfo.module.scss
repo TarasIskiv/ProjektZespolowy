@@ -19,6 +19,7 @@ input:focus {
     flex-wrap: wrap;
     justify-content: space-between;
 
+
     .field {
       font-size: 14px;
       justify-content: space-between;
@@ -33,7 +34,7 @@ input:focus {
         justify-content: space-between;
         margin: 0 10px;
 
-        input {
+        input, textarea {
           width: 90%;
           color: white;
           background-color: transparent;
@@ -46,11 +47,24 @@ input:focus {
 
           }
         }
+
+        textarea{
+          width: 100%;
+        }
       }
 
       .activeInput {
         background-color: white;
         color: black;
+      }
+    }
+  }
+
+  :last-child {
+    .inputEdit {
+      width: 100%;
+      textarea {
+        width: 100%;
       }
     }
   }
