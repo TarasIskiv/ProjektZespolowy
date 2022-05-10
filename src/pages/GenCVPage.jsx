@@ -7,6 +7,11 @@ import { connect } from "react-redux";
 import { setRole } from "../actions/MainActions";
 import UserApi from "../api/UserApi";
 import Button from '../components/Button'
+import generatePDF from "../api/pdfgenerator";
+import { Link } from "react-router-dom";
+import Template from '../templates/Template';
+import PDFViewerr from "./ViewerPDF";
+import { PDFViewer } from "@react-pdf/renderer";
 
 const GenCVPage = () => {
 
@@ -46,16 +51,6 @@ const GenCVPage = () => {
 
     const [template, setTemplate] = useState('1');
 
-    const generatePDF = () => {
-        //let el = UserApi.getTemplate();
-        
-        // el.then((response) => {
-        //     console.log(response.text);
-        //     let worker = html2pdf().from(response.text);
-        //     worker.save();
-        // });
-        //window.open(worker, '_blank', 'fullscreen=yes');
-    }
     return (
         <>
             <Header />
@@ -70,7 +65,16 @@ const GenCVPage = () => {
                                     <option value="2">Template 2</option>
                                     <option value="3">Template 3</option>
                                 </select>
-                                <img src="https://thispersondoesnotexist.com/image" alt="alt" />
+                                <PDFViewer height={'100%'} style={{marginTop: '20px'}}>
+                                    <Template 
+                                        name={firstName} 
+                                        surname={lastName} 
+                                        email={email} 
+                                        phone={phone}
+                                        location={location}     
+                                        bio={bio}
+                                    />
+                                </PDFViewer>
                             </div>
                             <div className={`${style.fieldsList}`}>
                                 <div className={style.field}>
@@ -145,7 +149,7 @@ const GenCVPage = () => {
                                             onChange={(e) => setBio(e.target.value)} />
                                     </div>
                                 </div>
-                                <Button onClick={(e) => generatePDF()} text="Create CV" />
+                                {/* <Link to='/viewer' ><Button  text="Create CV" /></Link> */}
                             </div>
                         </div>
                     </div>

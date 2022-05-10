@@ -14,6 +14,7 @@ const SignInPage = React.lazy(() => import ('./pages/SignInPage'));
 const SignUpPage = React.lazy(() => import ('./pages/SignUpPage'));
 const ProfilePage = React.lazy(() => import ('./pages/ProfilePage'));
 const GenCVPage = React.lazy(() => import ('./pages/GenCVPage'));
+const ViewerPDF = React.lazy(() => import ('./pages/ViewerPDF'));
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path='/signup' element={<SignUpPage />} />
                     <Route path='/profile' element={<CheckAuth><ProfilePage /></CheckAuth>} />
                     <Route path='/creatorcv' element={< GenCVPage />} />
+                    <Route path='/viewer' element={< ViewerPDF />} />
                 </Routes>
             </BrowserRouter>
         </React.Suspense>
