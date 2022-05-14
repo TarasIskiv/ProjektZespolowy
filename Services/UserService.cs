@@ -51,16 +51,6 @@ namespace FindJobWebApi.Services
 
             var mappedUser = _mapper.Map<UserDTO>(user);
 
-            if (!(user.UserAddressId == null || user.UserAddressId == 0))
-            {
-                var address = _context.UserAddresses.SingleOrDefault(x => x.Id == user.UserAddressId);
-                if (address != null)
-                {
-                    var mappedAddress = _mapper.Map<UserAddressDTO>(address);
-                    mappedUser.UserAddress = mappedAddress;
-                }
-            }
-
             return mappedUser;
         }
 
@@ -74,7 +64,10 @@ namespace FindJobWebApi.Services
             if (!string.IsNullOrEmpty(dto.LastName)) user.LastName = dto.LastName;
             if (!string.IsNullOrEmpty(dto.BirthdayDate.ToString())) user.BirthdayDate = dto.BirthdayDate;
             if (!string.IsNullOrEmpty(dto.ContactNumber)) user.ContactNumber = dto.ContactNumber;
-            if (!IsAddressExist(dto.UserAddressId)) user.UserAddressId = dto.UserAddressId;
+
+            if (!string.IsNullOrEmpty(dto.Country)) user.Country = dto.Country;
+            if (!string.IsNullOrEmpty(dto.City)) user.City = dto.City;
+
             if (!string.IsNullOrEmpty(dto.Gender)) user.Gender = dto.Gender;
             if (!string.IsNullOrEmpty(dto.Experience.ToString())) user.Experience = dto.Experience;
             if (!string.IsNullOrEmpty(dto.Password)) user.Password = dto.Password.getHash();

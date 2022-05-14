@@ -3,7 +3,8 @@
     public class ModifyCompanyDTO
     {
         public string? CompanyName { get; set; }
-        public int? CompanyAddressId { get; set; }
+        public string? Country { get; set; }
+        public string? City { get; set; }
         public string? Website { get; set; }
         public string? Password { get; set; }
         public string? Description { get; set; }
