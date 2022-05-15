@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import Button from './Button';
 
-export const SignForm = ({ title, fields, onSend, buttonTitle, isError, errorText }) => {
+//{ title, fields, onSend, buttonTitle, isError, errorText = '' }
+export const SignForm = (props) => {
   const [data, setData] = useState({});
 
   const onChange = (e) => {
@@ -11,18 +12,19 @@ export const SignForm = ({ title, fields, onSend, buttonTitle, isError, errorTex
 
   useEffect(() => {
     const tempData = {};
-    fields.forEach(element => {
+      props.fields.forEach(element => {
       tempData[element.name] = '';
     });
     setData(tempData);
     return () => setData({});
-  }, [JSON.stringify(fields)]);
+  }, [JSON.stringify(props.fields)]);
+    console.log(props.fields)
 
   return (
     <div className='form-section'>
-      <h1>{title}</h1>
-        <div className={isError ? 'error' : 'hidden'}><p>{errorText}</p></div>
-        {fields.map((item) =>
+      <h1>{props.title}</h1>
+        <div className={props.isError ? 'error' : 'hidden'}><p>{props.errorText}</p></div>
+        {props.fields.map((item) =>
           <div key={item.id}>
             <p>{item.title}</p>
             <label htmlFor={item.name}></label>
@@ -35,7 +37,7 @@ export const SignForm = ({ title, fields, onSend, buttonTitle, isError, errorTex
               autoComplete="off" />
           </div>
         )}
-        <Button onClick={() => onSend(data) } text={buttonTitle} />
+        <Button onClick={() => props.onSend(data) } text={props.buttonTitle} />
     </div>
   )
 }
@@ -47,4 +49,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(SignForm);
+export default connect(mapStateToProps, {})(SignForm);

@@ -18,6 +18,8 @@ const SignInPage = (props) => {
     ]
 
     const onSend = (data) => {
+        props.setError(false);
+
         for(const key in data) {
             if(data[key] === '') {
                 props.setError(true);
@@ -37,8 +39,21 @@ const SignInPage = (props) => {
                     cookies.set('jwt', result.data.data);
             })
             .catch((error) => {
-                props.setError(true);
-                props.setErrorText('Login/Password is incorrect!');
+                console.log(error)
+                if(error.response === undefined)
+                {
+                    props.setErrorText('The request was not sent');
+                    props.setError(true);
+                    return;
+                }
+                if(error.response.status === 500) {
+                    props.setErrorText('Server error 500!');
+                    props.setError(true);
+                } else {
+                    const errors = error.response.data.errors;
+                    props.setErrorText('error');
+                    props.setError(true);
+                }
             });
     }
 
@@ -60,7 +75,8 @@ const SignInPage = (props) => {
                     title={setTitle(props.tab)}
                     fields={fields}
                     onSend={onSend}
-                    buttonTitle='Sign in' />
+                    buttonTitle='Sign in'
+                    error/>
             </div>
             <Background />
             <Footer />
