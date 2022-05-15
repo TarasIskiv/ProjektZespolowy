@@ -13,7 +13,8 @@ const EmployerPage = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('*********');
     const [name, setName] = useState('');
-    const [location, setLocation] = useState('');
+    const [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
     const [website, setWebsite] = useState('');
     const [description, setDescription] = useState('');
 
@@ -26,13 +27,13 @@ const EmployerPage = (props) => {
             const getOffers = CompanyApi.getProfileData(info.id);
 
             props.setProfile(info)
-            console.log(info)
+            console.log(info);
             setEmail(info.email);
             setName(info.companyName);
             setWebsite(info.website);
             setDescription(info.description);
-            if(info.companyAddress != null)
-                setLocation(info.companyAddress);
+            //if(info.companyAddress != null)
+               // setLocation(info.companyAddress);
         });
 
 
@@ -62,7 +63,7 @@ const EmployerPage = (props) => {
                                 <input 
                                     onBlur={onBlur} 
                                     autoComplete={"qwe"} 
-                                    value={email} 
+                                    value={email}
                                     name={"email"} 
                                     type={"text"} 
                                     onChange={(e) => setEmail(e.target.value)}/>
@@ -96,15 +97,15 @@ const EmployerPage = (props) => {
                             </div>
                         </div>
                         <div className={style.field}>
-                            <p>Location:</p>
+                            <p>Country:</p>
                             <div className={style.inputEdit}>
                                 <input 
                                     onBlur={onBlur} 
                                     autoComplete={"qwe"} 
-                                    value={location} 
+                                    value={country}
                                     name={"companyAddress"}
                                     type={'text'} 
-                                    onChange={(e) => setLocation(e.target.value)}/>
+                                    onChange={(e) => setCountry(e.target.value)}/>
                                 <AiOutlineEdit size={16} />
                             </div>
                         </div>
@@ -122,15 +123,15 @@ const EmployerPage = (props) => {
                             </div>
                         </div>
                         <div className={style.field}>
-                            <p>Edit:</p>
+                            <p>City:</p>
                             <div className={style.inputEdit}>
                                 <input
                                     onBlur={onBlur}
                                     autoComplete={"qwe"}
-                                    value={website}
-                                    name={"Edit"}
+                                    value={city}
+                                    name={"City"}
                                     type={'text'}
-                                    onChange={(e) => setWebsite(e.target.value)}/>
+                                    onChange={(e) => setCity(e.target.value)}/>
                                 <AiOutlineEdit size={16} />
                             </div>
                         </div>

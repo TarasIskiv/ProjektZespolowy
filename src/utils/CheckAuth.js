@@ -3,7 +3,6 @@ import Cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
 import {clearMainState, setRole} from "../actions/MainActions";
 import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
 
 const CheckAuth = (props) => {
     const cookies = new Cookies();
