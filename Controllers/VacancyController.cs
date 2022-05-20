@@ -99,7 +99,7 @@ namespace FindJobWebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("search")]
-        public async Task<ActionResult<List<VacancyDTO>> SearchJob(int? minSalary, string? country, string? city, string? search)
+        public async Task<ActionResult<List<VacancyDTO>>> SearchJob(int? minSalary, string? country, string? city, string? search)
         {
 
             if (minSalary == null || minSalary == default(int)) minSalary = 0;
