@@ -96,16 +96,28 @@ namespace FindJobWebApi.Controllers
         {
             return $"Job by Id {id}";
         }
+
+        [AllowAnonymous]
         [HttpGet("search")]
-        public async Task<ActionResult<string>> SearchJob()
+        public async Task<ActionResult<List<VacancyDTO>> SearchJob(int? minSalary, string? country, string? city, string? search)
         {
-            return "SearchJob";
+
+            if (minSalary == null || minSalary == default(int)) minSalary = 0;
+            var vacancies = _service.GetVacanciesByFilters((int)minSalary, country, city, search);
+
+            if (vacancies == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Not found vacaniceis by selected filters"));
+
+            return Ok(ResponseConvertor.GetResult("OK", vacancies)); 
         }
+
         [HttpGet("apply")]
         public async Task<ActionResult<string>> ApplyJob()
         {
             return "ApplyJob";
         }
         #endregion
+
+
     }
 }
