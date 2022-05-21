@@ -7,9 +7,7 @@ namespace FindJobWebApi.DataBase
     {
         public DbSet<Candidtate> Candidtates { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<CompanyAddress> CompanyAddresses { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
 
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)

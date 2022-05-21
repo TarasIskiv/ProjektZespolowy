@@ -23,9 +23,6 @@ namespace FindJobWebApi.Services
 
             List<Vacancy> vacancies = new List<Vacancy>();
 
-
-
-
             int id = 0;
 
             if (_context.Vacancies.Count() != 0)
@@ -84,67 +81,38 @@ namespace FindJobWebApi.Services
         public IEnumerable<VacancyDTO> GetVacanciesByFilters(int minSalary, string country, string city, string search)
         {
             var vacancies = _context.Vacancies.ToList();
-            if (minSalary != 0)
-                vacancies = vacancies.Where(x => x.Salary > minSalary).ToList();
 
-            if(!string.IsNullOrEmpty(search))
-                vacancies = vacancies.
-                    Where(x => x.Title.Contains(search) ||
-                    x.Description.Contains(search) ||
-                    x.Requirements.Contains(search)).
-                    ToList();
+            if(minSalary != 0)
+                vacancies = vacancies.Where(x => x.Salary >= minSalary).ToList();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                vacancies = vacancies.Where(x => x.Title.ToLower().Contains(search) ||
+                                            x.Description.ToLower().Contains(search) ||
+                                            x.Requirements.ToLower().Contains(search)).ToList();
+            }
+                
 
             if (!string.IsNullOrEmpty(country) || !string.IsNullOrEmpty(city))
             {
-                var companiesAddresses = _context.CompanyAddresses.ToList();
-
-                var possibileVacancies = new List<Vacancy>();
+                foreach (var vacancy in vacancies)
+                    vacancy.Company = _context.Companies.Single(x => x.Id == vacancy.CompanyId);
 
                 if (!string.IsNullOrEmpty(country))
                 {
-                    foreach (var item in vacancies)
-                    {
-                        var id = item.CompanyId;
-                        var selectedCompany = _context.Companies.SingleOrDefault(x => x.Id == id);
-                        if (selectedCompany == null) continue;
-
-                        var selectedAddress = companiesAddresses.SingleOrDefault(x => x.Id == selectedCompany.CompanyAddressId);
-                        if (selectedAddress == null) continue;
-
-                        if ((!string.IsNullOrEmpty(selectedAddress.Country)) && selectedAddress.Country.Contains(country))
-                        {
-                            possibileVacancies.Add(item);
-                        }
-                    }
+                    country = country.ToLower();
+                    vacancies = vacancies.Where(x => !string.IsNullOrEmpty(x.Company.Country) && x.Company.Country.ToLower() == country).ToList();
                 }
-
-                vacancies = possibileVacancies;
-                possibileVacancies.Clear();
 
                 if (!string.IsNullOrEmpty(city))
                 {
-                    foreach (var item in vacancies)
-                    {
-                        var id = item.CompanyId;
-                        var selectedCompany = _context.Companies.SingleOrDefault(x => x.Id == id);
-                        if (selectedCompany == null) continue;
-
-                        var selectedAddress = companiesAddresses.SingleOrDefault(x => x.Id == selectedCompany.CompanyAddressId);
-                        if (selectedAddress == null) continue;
-
-                        if ((!string.IsNullOrEmpty(selectedAddress.City)) && selectedAddress.City.Contains(city))
-                        {
-                            possibileVacancies.Add(item);
-                        }
-                    }
-                }
-
-                vacancies = possibileVacancies;
-                possibileVacancies.Clear();
-
+                    city = city.ToLower();
+                    vacancies = vacancies.Where(x => !string.IsNullOrEmpty(x.Company.City) && x.Company.City.ToLower() == city).ToList();
+                } 
             }
-            return _mapper.Map<List<VacancyDTO>>(vacancies);
 
+            return _mapper.Map<List<VacancyDTO>>(vacancies);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace FindJobWebApi.Models
 
         [Required]
         public string CompanyName { get; set; } = String.Empty;
-        public int? CompanyAddressId { get; set; } 
-        public virtual CompanyAddress CompanyAddress { get; set; }
+        public string? Country { get; set; } = string.Empty;
+        public string? City { get; set; } = string.Empty;
         public string? Website { get; set; } = string.Empty;
 
         [Required]

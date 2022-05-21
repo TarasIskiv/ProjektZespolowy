@@ -24,7 +24,8 @@ namespace FindJobWebApi.Services
             if(!string.IsNullOrEmpty(dto.Description)) company.Description = dto.Description;
             if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
 
-            if (IsAddressExist(dto.CompanyAddressId)) company.CompanyAddressId = dto.CompanyAddressId;
+            if (!string.IsNullOrEmpty(dto.Country)) company.Country = dto.Country;
+            if (!string.IsNullOrEmpty(dto.City)) company.City = dto.City;
 
             if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
             if (!string.IsNullOrEmpty(dto.Password)) company.Password = dto.Password.getHash();
@@ -39,19 +40,6 @@ namespace FindJobWebApi.Services
             var companies = _context.Companies.ToList();
             var mappedCompanies = _mapper.Map<List<CompanyDTO>>(companies);
 
-            for(int i = 0; i < mappedCompanies.Count; i++)
-            {
-                var company = companies[i];
-                if (!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
-                {
-                    var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
-                    if (address != null)
-                    {
-                        var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
-                        mappedCompanies[i].CompanyAddress = mappedAddress;
-                    }
-                }  
-            }
             return mappedCompanies;
         }
 
@@ -61,15 +49,7 @@ namespace FindJobWebApi.Services
             if (company == null) return null;
 
             var mappedCompany = _mapper.Map<CompanyDTO>(company);
-            if (!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
-            {
-                var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
-                if (address != null)
-                {
-                    var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
-                    mappedCompany.CompanyAddress = mappedAddress;
-                }
-            }
+
             return mappedCompany;
         }
 
@@ -79,15 +59,7 @@ namespace FindJobWebApi.Services
             if(company == null) return null;
 
             var mappedCompany = _mapper.Map<CompanyDTO>(company);
-            if(!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
-            {
-                var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
-                if (address != null)
-                {
-                    var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
-                    mappedCompany.CompanyAddress = mappedAddress;
-                }
-            }
+            
             return mappedCompany;
         }
 
@@ -132,13 +104,6 @@ namespace FindJobWebApi.Services
         public void UploadCompanyPhoto()
         {
             throw new NotImplementedException();
-        }
-
-        private bool IsAddressExist(int? addressId)
-        {
-            if (addressId == null || _context.Companies.SingleOrDefault(x => x.Id == addressId) == null)
-                return false;
-            return true;
         }
     }
 }
