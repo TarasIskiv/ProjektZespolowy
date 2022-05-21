@@ -1,9 +1,11 @@
-﻿using FindJobWebApi.DTOs;
+﻿using Aspose.Pdf;
+using FindJobWebApi.DTOs;
 using FindJobWebApi.JWTLogic;
 using FindJobWebApi.Response;
 using FindJobWebApi.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobWebApi.Controllers
@@ -133,7 +135,18 @@ namespace FindJobWebApi.Controllers
         [HttpGet("profile/cv/create")]
         public async Task<ActionResult<string>> CreateCVForUser()
         {
-            return "CreateCVForUser";
+            HtmlLoadOptions options = new HtmlLoadOptions();
+            Document pdfDocument = new Document("C:\\Users\\ProjektZespolowy\\Controllers\\htmlpage.html", options);
+
+            MemoryStream output = new MemoryStream();
+            pdfDocument.Save(output);
+
+            output.Position = 0;
+
+            FileStreamResult result = new FileStreamResult(output, "application/pdf");
+            result.FileDownloadName = "Sample.pdf";
+
+            return result;
         }
         [HttpPut("profile/upload")]
         public async Task<ActionResult<string>> UploadUserProfile()
