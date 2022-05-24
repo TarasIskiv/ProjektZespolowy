@@ -92,13 +92,11 @@ namespace FindJobWebApi.Services
                                             x.Description.ToLower().Contains(search) ||
                                             x.Requirements.ToLower().Contains(search)).ToList();
             }
-                
+
+            vacancies.ForEach(vacancy => vacancy.Company = _context.Companies.Single(x => x.Id == vacancy.CompanyId));
 
             if (!string.IsNullOrEmpty(country) || !string.IsNullOrEmpty(city))
             {
-                foreach (var vacancy in vacancies)
-                    vacancy.Company = _context.Companies.Single(x => x.Id == vacancy.CompanyId);
-
                 if (!string.IsNullOrEmpty(country))
                 {
                     country = country.ToLower();
