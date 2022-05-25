@@ -14,6 +14,7 @@ const SignInPage = React.lazy(() => import ('./pages/SignInPage'));
 const SignUpPage = React.lazy(() => import ('./pages/SignUpPage'));
 const ProfilePage = React.lazy(() => import ('./pages/ProfilePage'));
 const PublicEmployerProfile = React.lazy(() => import ('./pages/PublicEmployerProfile'));
+const SearchPage = React.lazy(() => import ('./pages/SearchOffersPage'));
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path='/signup' element={<SignUpPage />} />
                     <Route path='/profile' element={<CheckAuth><ProfilePage /></CheckAuth>} />
                     <Route path='/company/:id' element={<CheckAuth><PublicEmployerProfile /></CheckAuth>} />
+                    <Route path='/search-offers' element={<SearchPage />} />
                 </Routes>
             </BrowserRouter>
         </React.Suspense>

@@ -13,7 +13,6 @@ const PublicEmployerProfile = () => {
     const [data, setData] = useState('');
     useEffect(() => {
         CompanyApi.getProfileById(id).then(res => {
-            console.log(res.data.data);
             setData(res.data.data);
         })
     }, []);

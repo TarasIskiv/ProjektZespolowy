@@ -1,0 +1,124 @@
+@import "../colors";
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .onClick {
+    border-radius: 0 !important;
+  }
+
+  .noneMenu {
+    display: none !important;
+  }
+
+  .filter {
+    font-family: Roboto;
+    width: 25%;
+    height: 35px;
+    background-color: white;
+    border: 0.5px;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+
+    .dropdown{
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      height: auto;
+      width: 100%;
+      right: 0;
+      top: 35px;
+
+      div {
+        padding: 6px 14px;
+        display: flex;
+        p {
+          font-size: 12px;
+          align-self: center;
+        }
+
+        input[type='text'] {
+          width: 50%;
+          margin-left: auto;
+        }
+      }
+    }
+  }
+
+  .search {
+    width: 45%;
+    svg {
+      right: 10px;
+      cursor: pointer;
+    }
+    input {
+      border: 0.5px;
+      font-size: 16px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      width: 100%  ;
+    }
+  }
+}
+
+.main {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+
+
+  .left {
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    background-color: $clr-blue-prim;
+    padding: 20px 20px;
+    color: white;
+
+    h2 {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    span {
+      margin-bottom: 10px;
+      color: #fffcfc;
+      font-style: italic;
+      font-size: 20px;
+    }
+    img {
+      width: 200px;
+      border-radius: 50%;
+    }
+
+    h1 {
+      font-size: 20px;
+      width: 90%;
+      margin-bottom: 5px;
+    }
+
+    p {
+      width: 90%;
+      margin-bottom: 20px;
+    }
+  }
+
+  .right {
+    width: 42vw;
+    height: 70vh;
+    overflow-y: scroll;
+  }
+}

@@ -1,0 +1,78 @@
+@import '../colors.scss';
+@import '../fonts.scss';
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    border: 1px solid $clr-blue-prim;
+    background-color: $clr-white;
+    transition: all 0.5s;
+
+    &:hover {
+        background-color: $clr-blue-prim;
+
+        transition: all 0.5s;
+        transition: 0.5s;
+    }
+
+    &:active {
+        background-color: $clr-blue-sec;
+        transition: 0.5s;
+        color: $clr-white;
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        button {
+            height: fit-content;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            width: 50px;
+            height: 50px;
+            padding: 14px;
+
+            margin: 0 5px;
+
+        }
+    }
+
+    img {
+        margin: 10px 15px;
+        width: 75px !important;
+        height: 75px !important;
+        border-radius: 50%;
+    }
+
+    .info {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 20px;
+
+        span {
+            margin: 3px 0;
+            &:first-child {
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+        }
+    }
+
+    @media (max-width: 510px) {
+        flex-direction: column;
+        align-items: center;
+
+        .info {
+            width: 100%;
+        }
+        .button {
+            padding: 10px 0;
+        }
+      }
+}
