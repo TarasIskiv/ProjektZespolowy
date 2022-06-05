@@ -65,7 +65,9 @@ namespace FindJobWebApi.Services
             if (!string.IsNullOrEmpty(dto.BirthdayDate.ToString())) user.BirthdayDate = dto.BirthdayDate;
             if (!string.IsNullOrEmpty(dto.ContactNumber)) user.ContactNumber = dto.ContactNumber;
 
+
             if (!string.IsNullOrEmpty(dto.Country)) user.Country = dto.Country;
+                
             if (!string.IsNullOrEmpty(dto.City)) user.City = dto.City;
 
             if (!string.IsNullOrEmpty(dto.Gender)) user.Gender = dto.Gender;
