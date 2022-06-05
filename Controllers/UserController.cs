@@ -1,4 +1,5 @@
 ﻿using Aspose.Pdf;
+using Aspose.Pdf.Text;
 using FindJobWebApi.DTOs;
 using FindJobWebApi.JWTLogic;
 using FindJobWebApi.Response;
@@ -132,11 +133,27 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region CV
-        [HttpGet("profile/cv/create")]
-        public async Task<ActionResult<string>> CreateCVForUser()
+        [HttpPost("profile/cv/create")]
+        public async Task<ActionResult<string>> CreateCVForUser([FromBody] CreateCVDTO createCVDTO)
         {
             HtmlLoadOptions options = new HtmlLoadOptions();
-            Document pdfDocument = new Document("C:\\Users\\ProjektZespolowy\\Controllers\\htmlpage.html", options);
+            Document pdfDocument;
+
+            try
+            {
+                pdfDocument = new Document($"CV Templates\\{createCVDTO.Template}.html", options);
+            }
+            catch
+            {
+                pdfDocument = new Document($"CV Templates\\1.html", options);
+            }
+
+            ReplaceText(pdfDocument, "[[FIRST_NAME]]", createCVDTO.FirstName);
+            ReplaceText(pdfDocument, "[[SECOND_NAME]]", createCVDTO.LastName);
+            ReplaceText(pdfDocument, "[[LOCATION]]", createCVDTO.Location);
+            ReplaceText(pdfDocument, "[[BIO]]", createCVDTO.Bio);
+            ReplaceText(pdfDocument, "[[EMAIL]]", createCVDTO.Email);
+            ReplaceText(pdfDocument, "[[PHONE]]", createCVDTO.Phone);
 
             MemoryStream output = new MemoryStream();
             pdfDocument.Save(output);
@@ -148,6 +165,21 @@ namespace FindJobWebApi.Controllers
 
             return result;
         }
+
+        private void ReplaceText(Document pdf, string replace, string to)
+        {
+            TextFragmentAbsorber textFragmentAbsorber = new TextFragmentAbsorber(replace);
+
+            pdf.Pages.Accept(textFragmentAbsorber);
+
+            TextFragmentCollection textFragments = textFragmentAbsorber.TextFragments;
+
+            foreach (TextFragment textFragment in textFragments)
+            {
+                textFragment.Text = to;
+            }
+        }
+
         [HttpPut("profile/upload")]
         public async Task<ActionResult<string>> UploadUserProfile()
         {
