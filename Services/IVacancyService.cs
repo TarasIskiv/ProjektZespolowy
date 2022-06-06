@@ -10,6 +10,6 @@ namespace FindJobWebApi.Services
 
         public string DeleteVacancy(int companyId, int vacancyId);
 
-        public IEnumerable<VacancyDTO> GetVacanciesByFilters(int minSalary, string country, string city, string search);
+        public IEnumerable<VacancyDTO>? GetVacanciesByFilters(int minSalary, string country, string city, string search);
     }
 }

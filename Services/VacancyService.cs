@@ -78,11 +78,11 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
-        public IEnumerable<VacancyDTO> GetVacanciesByFilters(int minSalary, string country, string city, string search)
+        public IEnumerable<VacancyDTO>? GetVacanciesByFilters(int minSalary, string country, string city, string search)
         {
             var vacancies = _context.Vacancies.ToList();
 
-            if(minSalary != 0)
+            if (minSalary != 0)
                 vacancies = vacancies.Where(x => x.Salary >= minSalary).ToList();
 
             if (!string.IsNullOrEmpty(search))
@@ -95,20 +95,20 @@ namespace FindJobWebApi.Services
 
             vacancies.ForEach(vacancy => vacancy.Company = _context.Companies.Single(x => x.Id == vacancy.CompanyId));
 
-            if (!string.IsNullOrEmpty(country) || !string.IsNullOrEmpty(city))
+            if (!string.IsNullOrEmpty(country))
             {
-                if (!string.IsNullOrEmpty(country))
-                {
-                    country = country.ToLower();
-                    vacancies = vacancies.Where(x => !string.IsNullOrEmpty(x.Company.Country) && x.Company.Country.ToLower() == country).ToList();
-                }
-
-                if (!string.IsNullOrEmpty(city))
-                {
-                    city = city.ToLower();
-                    vacancies = vacancies.Where(x => !string.IsNullOrEmpty(x.Company.City) && x.Company.City.ToLower() == city).ToList();
-                } 
+                country = country.ToLower();
+                vacancies = vacancies.Where(x => !string.IsNullOrEmpty(x.Company.Country) && x.Company.Country.ToLower() == country).ToList();
             }
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                city = city.ToLower();
+                vacancies = vacancies.Where(x => !string.IsNullOrEmpty(x.Company.City) && x.Company.City.ToLower() == city).ToList();
+            }
+
+            if (vacancies.Count == 0)
+                return null;
 
             return _mapper.Map<List<VacancyDTO>>(vacancies);
         }
