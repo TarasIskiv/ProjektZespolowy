@@ -134,7 +134,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
 
-        [HttpPost("cv")]
+        [HttpPost("test/{id}")]
         public async Task<ActionResult<string>> Test([FromRoute] int id)
         {
             return $"Test {id}";
