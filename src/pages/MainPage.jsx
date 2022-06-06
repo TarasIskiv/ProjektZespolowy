@@ -10,6 +10,7 @@ import {switchTab} from "../actions/MainActions";
 import {connect} from "react-redux";
 import style from '../styles/pages/mainPage.scss'
 import {Link} from "react-router-dom";
+import SearchOfferRow from '../components/SearchOfferRow';
 
 const MainPage = (props) => {
 
@@ -25,6 +26,7 @@ const MainPage = (props) => {
               {!props.tab ? <Link to='/creatorcv'><Button fontsize='24px' text='Create CV' /> </Link>: <input placeholder='Search' />}
             </div>
         </section>
+        <SearchOfferRow />
         <section className='second-section'>
             <div>
               <h1>sit amet purus gravida quis</h1>

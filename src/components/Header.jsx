@@ -26,7 +26,7 @@ const Header = (props) => {
           <Hamburger className={style.hamburger} onClick={() => onClick(!menuOpened)} />
         </div>
         <div className={[style.header_main, menuOpened].join(" ")}>
-          { props.role === null ?
+          {
               <>
                 <Switch onSwitch={props.onSwitch} className={style.switch}/>
                 <div className={style.buttons}>
@@ -34,11 +34,11 @@ const Header = (props) => {
                   <Link to='/signin'><Button text="Sign in"/></Link>
                 </div>
               </>
-              : 
-              <>
-              <div style={{width:'100%'}}></div>
-                <Link to='/profile'><Button text="Profile" /></Link>
-              </>
+              // :
+              // <>
+              // <div style={{width:'100%'}}></div>
+              //   <Link to='/profile'><Button text="Profile" /></Link>
+              // </>
           }
         </div>
 

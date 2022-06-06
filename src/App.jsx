@@ -13,6 +13,7 @@ import CheckAuth from "./utils/CheckAuth";
 const SignInPage = React.lazy(() => import ('./pages/SignInPage'));
 const SignUpPage = React.lazy(() => import ('./pages/SignUpPage'));
 const ProfilePage = React.lazy(() => import ('./pages/ProfilePage'));
+const PublicEmployerProfile = React.lazy(() => import ('./pages/PublicEmployerProfile'));
 const GenCVPage = React.lazy(() => import ('./pages/GenCVPage'));
 const ViewerPDF = React.lazy(() => import ('./pages/ViewerPDF'));
 
@@ -28,6 +29,7 @@ function App() {
                     <Route path='/profile' element={<CheckAuth><ProfilePage /></CheckAuth>} />
                     <Route path='/creatorcv' element={< GenCVPage />} />
                     <Route path='/viewer' element={< ViewerPDF />} />
+                    <Route path='/company/:id' element={<CheckAuth><PublicEmployerProfile /></CheckAuth>} />
                 </Routes>
             </BrowserRouter>
         </React.Suspense>

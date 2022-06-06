@@ -60,12 +60,17 @@ const SignUpPage = (props) => {
                 }
             })
             .catch((error) => {
-                props.setError(true);
 
-                if('data' in error.response.data)
-                    props.setErrorText(error.response.data.data);
-                else
-                    props.setErrorText(Object.values(error.response.data.errors)[0][0]);
+                if(error.response !== undefined) {
+                    props.setError(true);
+                    if('data' in error.response.data)
+                        props.setErrorText(error.response.data.data);
+                    else
+                        props.setErrorText(Object.values(error.response.data.errors)[0][0]);
+                } else {
+                    props.setError(true);
+                    props.setErrorText("undefined response!");
+                }
             });
     }
 
