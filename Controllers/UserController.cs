@@ -15,6 +15,8 @@ namespace FindJobWebApi.Controllers
     [Route("api/user")]
     public class UserController : ControllerBase
     {
+        private const string CV_TEMPLATE = "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <title>Document</title> <style> .container { padding: 20px 30px; } .container > div > p { margin-top: -15px; margin-bottom: 30px; } </style> </head> <body> <div class=\"container\"> <h1>[[FIRST_NAME]] [[SECOND_NAME]]</h1> <div> <h3>Location</h3> <p>[[LOCATION]]</p> </div> <div> <h3>Biography</h3> <p>[[BIO]]</p> </div> <div> <h3>Contact</h3> <p>Email: [[EMAIL]]</p> <p>Phone: [[PHONE]]</p> </div> </div> </body> </html>";
+        
         private readonly IUserService _service;
         private readonly ITokenService _tokenService;
 
@@ -145,7 +147,8 @@ namespace FindJobWebApi.Controllers
         public async Task<ActionResult<string>> CreateCVForUser([FromBody] CreateCVDTO createCVDTO)
         {
             HtmlLoadOptions options = new HtmlLoadOptions();
-            Document pdfDocument = new Document($"CV Templates\\1.html", options);
+            Document pdfDocument = new Document(GenerateStreamFromString(CV_TEMPLATE), options);
+            //Document pdfDocument = new Document($"CV Templates\\1.html", options);
 
             /*
             try
@@ -187,6 +190,16 @@ namespace FindJobWebApi.Controllers
             {
                 textFragment.Text = to;
             }
+        }
+
+        private static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
 
         [HttpPut("profile/upload")]
