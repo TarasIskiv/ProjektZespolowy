@@ -95,7 +95,12 @@ namespace FindJobWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetJobById([FromRoute] int id)
         {
-            return $"Job by Id {id}";
+            var vacancy = _service.GetVacancyById(id);
+
+            if (vacancy == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by vacancy ID"));
+
+            return Ok(ResponseConvertor.GetResult("OK", vacancy));
         }
 
         [AllowAnonymous]

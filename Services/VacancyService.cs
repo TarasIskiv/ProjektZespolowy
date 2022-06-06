@@ -78,6 +78,17 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
+        public VacancyDTO? GetVacancyById(int id)
+        {
+            var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == id);
+
+            if (vacancy == null) return null;
+
+            var mappedVacancy = _mapper.Map<VacancyDTO>(vacancy);
+
+            return mappedVacancy;
+        }
+
         public IEnumerable<VacancyDTO>? GetVacanciesByFilters(int? minSalary, string? country, string? city, string? search)
         {
             var vacancies = _context.Vacancies.ToList();
