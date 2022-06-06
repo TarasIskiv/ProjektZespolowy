@@ -7,11 +7,7 @@ import { connect } from "react-redux";
 import { setRole } from "../actions/MainActions";
 import UserApi from "../api/UserApi";
 import Button from '../components/Button'
-import generatePDF from "../api/pdfgenerator";
 import { Link } from "react-router-dom";
-import Template from '../templates/Template';
-import PDFViewerr from "./ViewerPDF";
-import { PDFViewer } from "@react-pdf/renderer";
 
 const GenCVPage = () => {
 
@@ -37,19 +33,48 @@ const GenCVPage = () => {
         setIsOpen(!isOpen);
     }
 
+    const sendInfo = () => {
+        let data =
+        {
+            'email': email,
+            'firstName': firstName,
+            'lastName': lastName,
+            'phone': phone,
+            'location': location,
+            'bio': bio,
+            'template': template
+        };
+
+        UserApi.getCV(data).then((response) => {
+            console.log(response.data);
+            const url = window.URL.createObjectURL(new Blob([response.data], {
+                type: 'application/pdf'
+            }));
+            console.log(url);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'CV.pdf');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        }).catch((error) => {
+            console.log(error);
+        });
+
+    }
+
     const onBlur = (e) => {
         console.log(e.target.value);
     }
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('*********');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [location, setLocation] = useState('');
     const [bio, setBio] = useState('');
 
-    const [template, setTemplate] = useState('1');
+    const [template, setTemplate] = useState(1);
 
     return (
         <>
@@ -60,21 +85,14 @@ const GenCVPage = () => {
                         <h1>CV creator</h1>
                         <div className={style.columns} >
                             <div className={style.preview} >
-                                <select value={template} onChange={(e) => setTemplate(e.target.value)}>
+                                <select
+                                    value={template}
+                                    onChange={(e) => setTemplate(Number(e.target.value))}
+                                >
                                     <option value="1">Template 1</option>
                                     <option value="2">Template 2</option>
                                     <option value="3">Template 3</option>
                                 </select>
-                                <PDFViewer height={'100%'} style={{marginTop: '20px'}}>
-                                    <Template 
-                                        name={firstName} 
-                                        surname={lastName} 
-                                        email={email} 
-                                        phone={phone}
-                                        location={location}     
-                                        bio={bio}
-                                    />
-                                </PDFViewer>
                             </div>
                             <div className={`${style.fieldsList}`}>
                                 <div className={style.field}>
@@ -149,7 +167,7 @@ const GenCVPage = () => {
                                             onChange={(e) => setBio(e.target.value)} />
                                     </div>
                                 </div>
-                                {/* <Link to='/viewer' ><Button  text="Create CV" /></Link> */}
+                                <Button onClick={sendInfo} text="Create CV" />
                             </div>
                         </div>
                     </div>
