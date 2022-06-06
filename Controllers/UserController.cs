@@ -141,13 +141,13 @@ namespace FindJobWebApi.Controllers
         }
 
         #region CV
-        [Authorize(Roles = "User")]
         [HttpPost("cv")]
         public async Task<ActionResult<string>> CreateCVForUser([FromBody] CreateCVDTO createCVDTO)
         {
             HtmlLoadOptions options = new HtmlLoadOptions();
-            Document pdfDocument;
+            Document pdfDocument = new Document($"CV Templates\\1.html", options);
 
+            /*
             try
             {
                 pdfDocument = new Document($"CV Templates\\{createCVDTO.Template}.html", options);
@@ -155,7 +155,7 @@ namespace FindJobWebApi.Controllers
             catch
             {
                 pdfDocument = new Document($"CV Templates\\1.html", options);
-            }
+            }*/
 
             ReplaceText(pdfDocument, "[[FIRST_NAME]]", createCVDTO.FirstName);
             ReplaceText(pdfDocument, "[[SECOND_NAME]]", createCVDTO.LastName);
