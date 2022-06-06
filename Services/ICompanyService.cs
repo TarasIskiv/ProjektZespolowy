@@ -13,7 +13,7 @@ namespace FindJobWebApi.Services
 
         public IEnumerable<CompanyDTO> GetCompanies();
 
-        public IEnumerable<CompanyDTO>? GetCompaniesByFilters(string country, string city, string search);
+        public IEnumerable<CompanyDTO>? GetCompaniesByFilters(string? country, string? city, string? search);
 
         public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id);
 

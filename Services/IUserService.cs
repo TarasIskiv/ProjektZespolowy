@@ -12,7 +12,7 @@ namespace FindJobWebApi.Services
 
         public IEnumerable<UserDTO> GetUsers();
 
-        public IEnumerable<UserDTO>? GetUsersByFilters(string country, string city, string gender, float experience, string search);
+        public IEnumerable<UserDTO>? GetUsersByFilters(string? country, string? city, string? gender, float? experience, string? search);
 
         public string AddProfile(int id, ModifyUserDTO dto);
     }

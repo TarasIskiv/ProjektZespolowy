@@ -107,10 +107,7 @@ namespace FindJobWebApi.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<int>> SearchUser(string? country, string? city, string? gender, float? experience, string? search)
         {
-            if (experience == null || experience == default(float))
-                experience = 0;
-
-            var users = _service.GetUsersByFilters(country, city, gender, (float)experience, search);
+            var users = _service.GetUsersByFilters(country, city, gender, experience, search);
 
             if (users == null)
                 return NotFound(ResponseConvertor.GetResult("error", "Not found users by selected filters"));

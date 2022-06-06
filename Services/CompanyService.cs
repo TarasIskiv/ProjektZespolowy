@@ -43,7 +43,7 @@ namespace FindJobWebApi.Services
             return mappedCompanies;
         }
 
-        public IEnumerable<CompanyDTO>? GetCompaniesByFilters(string country, string city, string search)
+        public IEnumerable<CompanyDTO>? GetCompaniesByFilters(string? country, string? city, string? search)
         {
             var companies = _context.Companies.ToList();
 

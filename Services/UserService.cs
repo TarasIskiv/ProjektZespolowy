@@ -62,11 +62,11 @@ namespace FindJobWebApi.Services
             return mappedUsers;
         }
 
-        public IEnumerable<UserDTO>? GetUsersByFilters(string country, string city, string gender, float experience, string search)
+        public IEnumerable<UserDTO>? GetUsersByFilters(string? country, string? city, string? gender, float? experience, string? search)
         {
             var users = _context.Users.ToList();
 
-            if (experience > 0)
+            if (experience != null && experience != default(float) && experience > 0)
                 users = users.Where(x => x.Experience >= experience).ToList();
 
             if (!string.IsNullOrEmpty(gender))

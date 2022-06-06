@@ -90,7 +90,8 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
 
-        #region InProgress
+        #region Get Vacancies
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetJobById([FromRoute] int id)
         {
@@ -101,16 +102,17 @@ namespace FindJobWebApi.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<List<VacancyDTO>>> SearchJob(int? minSalary, string? country, string? city, string? search)
         {
-
-            if (minSalary == null || minSalary == default(int)) minSalary = 0;
-            var vacancies = _service.GetVacanciesByFilters((int)minSalary, country, city, search);
+            var vacancies = _service.GetVacanciesByFilters(minSalary, country, city, search);
 
             if (vacancies == null)
                 return NotFound(ResponseConvertor.GetResult("error", "Not found vacaniceis by selected filters"));
 
-            return Ok(ResponseConvertor.GetResult("OK", vacancies)); 
+            return Ok(ResponseConvertor.GetResult("OK", vacancies));
         }
 
+        #endregion
+
+        #region InProgress
         [HttpGet("apply")]
         public async Task<ActionResult<string>> ApplyJob()
         {

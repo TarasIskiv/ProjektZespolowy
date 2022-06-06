@@ -78,11 +78,11 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
-        public IEnumerable<VacancyDTO>? GetVacanciesByFilters(int minSalary, string country, string city, string search)
+        public IEnumerable<VacancyDTO>? GetVacanciesByFilters(int? minSalary, string? country, string? city, string? search)
         {
             var vacancies = _context.Vacancies.ToList();
 
-            if (minSalary != 0)
+            if (minSalary != null && minSalary != default(int) && minSalary > 0)
                 vacancies = vacancies.Where(x => x.Salary >= minSalary).ToList();
 
             if (!string.IsNullOrEmpty(search))
