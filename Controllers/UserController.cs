@@ -133,8 +133,8 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region CV
-        [AllowAnonymous]
-        [HttpPost("cv")]
+        [Authorize(Roles = "User")]
+        [HttpPost("profile/cv/create")]
         public async Task<ActionResult<string>> CreateCVForUser([FromBody] CreateCVDTO createCVDTO)
         {
             HtmlLoadOptions options = new HtmlLoadOptions();
