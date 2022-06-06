@@ -54,6 +54,48 @@ namespace FindJobWebApi.Services
             return mappedUser;
         }
 
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            var users = _context.Users.ToList();
+            var mappedUsers = _mapper.Map<List<UserDTO>>(users);
+
+            return mappedUsers;
+        }
+
+        public IEnumerable<UserDTO>? GetUsersByFilters(string country, string city, string gender, float experience, string search)
+        {
+            var users = _context.Users.ToList();
+
+            if (experience > 0)
+                users = users.Where(x => x.Experience >= experience).ToList();
+
+            if (!string.IsNullOrEmpty(gender))
+                users = users.Where(x => x.Gender == gender).ToList();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                users = users.Where(x => !string.IsNullOrEmpty(x.Desciption) && x.Desciption.ToLower().Contains(search)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                country = country.ToLower();
+                users = users.Where(x => !string.IsNullOrEmpty(x.Country) && x.Country.ToLower() == country).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                city = city.ToLower();
+                users = users.Where(x => !string.IsNullOrEmpty(x.City) && x.City.ToLower() == city).ToList();
+            }
+
+            if (users.Count == 0)
+                return null;
+
+            return _mapper.Map<List<UserDTO>>(users);
+        }
+
         public string AddProfile(int id, ModifyUserDTO dto)
         {
             var user = _context.Users.SingleOrDefault(x => x.Id == id);
@@ -78,13 +120,6 @@ namespace FindJobWebApi.Services
             _context.SaveChanges();
 
             return "OK";
-        }
-
-        private bool IsAddressExist(int? addressId)
-        {
-            if (addressId == null || _context.Companies.SingleOrDefault(x => x.Id == addressId) == null)
-                return false;
-            return true;
         }
     }
 }

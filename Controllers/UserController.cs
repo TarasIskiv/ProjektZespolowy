@@ -81,17 +81,41 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region Get Users
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetUserById([FromRoute] int id)
         {
+            var user = _service.GetUser(id);
 
+            if (user == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by user ID"));
 
-            return $"GetUserById : {id}";
+            return Ok(ResponseConvertor.GetResult("OK", user));
         }
+
+        [AllowAnonymous]
         [HttpGet("list")]
         public async Task<ActionResult<string>> GetUsers()
         {
-            return "User List";
+            var users = _service.GetUsers();
+            if (users == null) return BadRequest(ResponseConvertor.GetResult("error", "There aren't found users"));
+
+            return Ok(ResponseConvertor.GetResult("OK", users));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("search")]
+        public async Task<ActionResult<int>> SearchUser(string? country, string? city, string? gender, float? experience, string? search)
+        {
+            if (experience == null || experience == default(float))
+                experience = 0;
+
+            var users = _service.GetUsersByFilters(country, city, gender, (float)experience, search);
+
+            if (users == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Not found users by selected filters"));
+
+            return Ok(ResponseConvertor.GetResult("OK", users));
         }
         #endregion
 
@@ -136,13 +160,8 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
 
-        [HttpPost("test/{id}")]
-        public async Task<ActionResult<string>> Test([FromRoute] int id)
-        {
-            return $"Test {id}";
-        }
-
         #region CV
+        [AllowAnonymous]
         [HttpPost("cv")]
         public async Task<ActionResult<string>> CreateCVForUser([FromBody] CreateCVDTO createCVDTO)
         {
@@ -192,7 +211,7 @@ namespace FindJobWebApi.Controllers
             }
         }
 
-        private static Stream GenerateStreamFromString(string s)
+        private Stream GenerateStreamFromString(string s)
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
