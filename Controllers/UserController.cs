@@ -82,6 +82,8 @@ namespace FindJobWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetUserById([FromRoute] int id)
         {
+
+
             return $"GetUserById : {id}";
         }
         [HttpGet("list")]
@@ -131,6 +133,12 @@ namespace FindJobWebApi.Controllers
 
         }
         #endregion
+
+        [HttpPost("cv")]
+        public async Task<ActionResult<string>> Test([FromRoute] int id)
+        {
+            return $"Test {id}";
+        }
 
         #region CV
         [Authorize(Roles = "User")]
