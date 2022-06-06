@@ -64,7 +64,8 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
         {
             policy.WithOrigins("http://localhost:3000",
-            "https://pz-findjob.herokuapp.com")
+            "https://pz-findjob.herokuapp.com",
+            "https://pz-api-finfjob.azurewebsites.net")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
