@@ -108,6 +108,19 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", companies));
         }
+
+        [AllowAnonymous]
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<CompanyDTO>>> SearchCompany(string? country, string? city, string? search)
+        {
+            var companies = _service.GetCompaniesByFilters(country, city, search);
+
+            if (companies == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Not found companies by selected filters"));
+
+            return Ok(ResponseConvertor.GetResult("OK", companies));
+        }
+
         #endregion
 
         #region Get List of Vacancies
