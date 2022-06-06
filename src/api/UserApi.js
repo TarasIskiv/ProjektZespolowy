@@ -14,20 +14,19 @@ const getProfile = async () => {
 }
 
 const getCV = async (data) => {
-    // return await axios({
-    //     url: 'https://pz-api-finfjob.azurewebsites.net/api/user/profile/cv/create',
-    //     method: 'POST',
-    //     body: data,
-    //     withCredentials: true,
-    // });
-    return await Api.post('/api/user/profile/cv/create', data);
+    return await Api.post('/api/user/cv', data, { responseType: 'blob'});
+}
+
+const test = async (data) => {
+    return await Api.post('/api/user/test/' + data);
 }
 
 const helper = {
     registerAccount: registerAccount,
     login: login,
     getProfile: getProfile,
-    getCV: getCV
+    getCV: getCV,
+    test: test
 }
 
 export  { registerAccount, login };

@@ -3,8 +3,8 @@ import Cookies from "universal-cookie";
 
 
 const Api = axios.create({
-    baseURL: 'https://localhost:7253',
-    //baseURL: 'https://pz-api-finfjob.azurewebsites.net/',
+    // baseURL: 'https://localhost:7253',
+    baseURL: 'https://pz-api-finfjob.azurewebsites.net/',
     timeout: 5000,
     withCredentials: true,
 });

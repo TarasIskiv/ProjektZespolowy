@@ -45,8 +45,11 @@ const GenCVPage = () => {
             'template': template
         };
 
+        // UserApi.test(1).then((response) => {
+        //     console.log(response);
+        // })
         UserApi.getCV(data).then((response) => {
-            console.log(response.data);
+            console.log(response)
             const url = window.URL.createObjectURL(new Blob([response.data], {
                 type: 'application/pdf'
             }));
