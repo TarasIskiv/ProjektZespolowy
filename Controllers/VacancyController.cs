@@ -118,10 +118,40 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region InProgress
-        [HttpGet("apply")]
-        public async Task<ActionResult<string>> ApplyJob()
+        [Authorize(Roles = "User")]
+        [HttpGet("{id}/apply")]
+        public async Task<ActionResult<string>> ApplyJob([FromRoute] int id)
         {
-            return "ApplyJob";
+            var currentUser = User.Identity;
+            var currentId = Int32.MinValue;
+
+            if (currentUser == null || !Int32.TryParse(currentUser.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by user token"));
+
+            SubcribeCandidateDTO DTO = new SubcribeCandidateDTO();
+            DTO.UserId = currentId;
+            DTO.VacancyId = id;
+
+            var result = _service.SubscribeVacancy(DTO);
+
+            if (!result.Equals("OK"))
+                return Conflict(ResponseConvertor.GetResult("error", result));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}/candidates")]
+        public async Task<ActionResult<string>> GetCandidates([FromRoute] int id)
+        {
+            List<UserDTO> candidates;
+
+            var result = _service.GetCandidates(id, out candidates);
+
+            if(result.Equals("OK"))
+                return Ok(ResponseConvertor.GetResult("OK", candidates));
+
+            return NotFound(ResponseConvertor.GetResult("error", result));
         }
         #endregion
 

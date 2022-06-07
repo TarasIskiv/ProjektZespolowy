@@ -17,6 +17,7 @@ namespace FindJobWebApi.AutoMapper
                     cfg.CreateMap<User, UserDTO>();
                     cfg.CreateMap<CreateVacancyDTO, Vacancy>();
                     cfg.CreateMap<Vacancy, VacancyDTO>();
+                    cfg.CreateMap<SubcribeCandidateDTO, Candidtate>();
                 }
             ).CreateMapper();
         }

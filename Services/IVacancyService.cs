@@ -13,5 +13,11 @@ namespace FindJobWebApi.Services
         public VacancyDTO? GetVacancyById(int id);
 
         public IEnumerable<VacancyDTO>? GetVacanciesByFilters(int? minSalary, string? country, string? city, string? search);
+
+        public string SubscribeVacancy(SubcribeCandidateDTO candidateDTO);
+
+        public string UnsubscribeVacancy();
+
+        public string GetCandidates(int id, out List<UserDTO> result);
     }
 }

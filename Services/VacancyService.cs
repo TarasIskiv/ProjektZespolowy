@@ -123,5 +123,50 @@ namespace FindJobWebApi.Services
 
             return _mapper.Map<List<VacancyDTO>>(vacancies);
         }
+
+        public string SubscribeVacancy(SubcribeCandidateDTO candidateDTO)
+        {
+            if (!_context.Vacancies.Any(x => x.Id == candidateDTO.VacancyId))
+                return "Vacancy is not exist";
+
+            if (!_context.Users.Any(x => x.Id == candidateDTO.UserId))
+                return "User is not exist";
+
+            if(_context.Candidtates.Any(x => x.UserId == candidateDTO.UserId && x.VacancyId == candidateDTO.VacancyId))
+                return "User already subscribed";
+
+            var candidate = _mapper.Map<Candidtate>(candidateDTO);
+
+            _context.Candidtates.Add(candidate);
+            _context.SaveChanges();
+
+            return "OK";
+        }
+
+        public string UnsubscribeVacancy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCandidates(int id, out List<UserDTO> result)
+        {
+            result = new List<UserDTO>();
+
+            if (!_context.Vacancies.Any(x => x.Id == id))
+                return "Vacancy is not exist";
+
+            var candidates = _context.Candidtates.Where(x => x.VacancyId == id).ToList();
+
+            if (candidates.Count == 0)
+                return "Nobody subscribed for this vacancy";
+
+            foreach (var candidate in candidates)
+            {
+                var user = _mapper.Map<UserDTO>(_context.Users.Single(x => x.Id == candidate.UserId));
+                result.Add(user);
+            }
+
+            return "OK";
+        }
     }
 }
