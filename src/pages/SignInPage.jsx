@@ -34,9 +34,10 @@ const SignInPage = (props) => {
             .then((result) => {
                 console.log(result);
                     props.setError(false);
-                    alert("jwt token - " + result.data.data);
+                    //alert("jwt token - " + result.data.data);
                     const cookies = new Cookies();
                     cookies.set('jwt', result.data.data);
+                    window.open('/profile', '_self');
             })
             .catch((error) => {
                 console.log(error)
