@@ -1,0 +1,46 @@
+@import "../colors.scss";
+
+
+.columns {
+  width: 90%;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 100px;
+  margin: 20px 0;
+
+  .preview {
+    display: flex;
+    flex-direction: column;    
+    width: 45%;
+  }
+
+  .fieldsList {
+    width: 45%;
+    .button {
+      margin: 10px 10px;
+    }
+  }
+
+  input, textarea, select {
+    border-radius: 10px;
+    padding: 5px;
+    border: 1px solid $clr-blue-prim;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1199px) {
+ .columns {
+   flex-direction: column;
+   height: auto;
+  .preview {
+    height: 500px;
+    width: 100%;
+ }
+  .fieldsList{
+    width: 100%;
+  }
+}
+}

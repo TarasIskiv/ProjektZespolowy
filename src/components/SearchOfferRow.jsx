@@ -3,6 +3,7 @@ import Button from './Button'
 import PropTypes from 'prop-types'
 import style from '../styles/components/searchOfferRow.module.scss'
 import { AiOutlineMail, AiOutlineStar } from "react-icons/ai";
+
 import { FiPhone } from 'react-icons/fi';
 import { setActiveJob } from '../actions/JobActions';
 import {connect} from "react-redux";
@@ -41,3 +42,4 @@ const SearchOfferRow = props => {
 SearchOfferRow.propTypes = {}
 
 export default connect(null, { setActiveJob })(SearchOfferRow)
+

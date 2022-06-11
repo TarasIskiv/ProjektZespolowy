@@ -6,7 +6,8 @@ import style from '../styles/components/header.module.scss'
 import {useState} from 'react';
 import Hamburger from './Hamburger';
 import {connect} from "react-redux";
-
+import Cookie from 'universal-cookie';
+import { setRole } from '../actions/MainActions';
 
 const Header = (props) => {
 
@@ -15,6 +16,16 @@ const Header = (props) => {
   const onClick = (whichOne) => { setOpen(whichOne); }
 
   const menuOpened = open ? style.open_menu : "";
+
+  const useEffect = (() => {
+  }, [props.role]);
+
+  const signOut = () => {
+    let cookie = new Cookie();
+    console.log(props.role);
+    props.setRole(null);
+    window.open('/', '_self');
+  }
 
   return (
     <header className={style.header}>
@@ -27,6 +38,7 @@ const Header = (props) => {
         </div>
         <div className={[style.header_main, menuOpened].join(" ")}>
           {
+            props.role == null ?
               <>
                 <Switch onSwitch={props.onSwitch} className={style.switch}/>
                 <div className={style.buttons}>
@@ -34,11 +46,14 @@ const Header = (props) => {
                   <Link to='/signin'><Button text="Sign in"/></Link>
                 </div>
               </>
-              // :
-              // <>
-              // <div style={{width:'100%'}}></div>
-              //   <Link to='/profile'><Button text="Profile" /></Link>
-              // </>
+              :
+              <>
+              <input placeholder='Search' />
+              <div className={style.buttons}>
+                <Link to='/profile'><Button text="Profile" /></Link>
+                <Button text="Sign out" onClick={signOut} />
+              </div>
+              </>
           }
         </div>
 
@@ -53,4 +68,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, {setRole})(Header);

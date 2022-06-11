@@ -18,7 +18,7 @@ export const SignForm = (props) => {
     setData(tempData);
     return () => setData({});
   }, [JSON.stringify(props.fields)]);
-    console.log(props.fields)
+    //console.log(props.fields)
 
   return (
     <div className='form-section'>
