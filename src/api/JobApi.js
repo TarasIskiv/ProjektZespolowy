@@ -8,9 +8,15 @@ const deleteOffer = async (id) => {
     return await Api.delete('/api/job/' + id);
 }
 
+const searchOffers = async (params) => {
+    return await Api.get('/api/job/search?' + params);
+}
+
+
 const helper = {
     newOffer: newOffer,
-    deleteOffer: deleteOffer
+    deleteOffer: deleteOffer,
+    searchOffers: searchOffers
 }
 
 export default helper;

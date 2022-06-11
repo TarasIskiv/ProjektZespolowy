@@ -9,6 +9,7 @@ const CheckAuth = (props) => {
     const token = cookies.get('jwt');
     if(token === undefined) {
         props.clearMainState();
+        props.setRole(null);
         return <Navigate  to="/" />
     }
 
@@ -16,6 +17,7 @@ const CheckAuth = (props) => {
     const dateNow = new Date();
     if(decodedJwt.exp * 1000 < Date.now()) {
         props.clearMainState();
+        props.setRole(null);
         return <Navigate  to="/" />
     }
     props.setRole(decodedJwt.role);
