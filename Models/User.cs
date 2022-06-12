@@ -10,6 +10,7 @@ namespace FindJobWebApi.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        public string? Image { get; set; }
         public DateTime? BirthdayDate { get; set; } =default(DateTime?);
         public string? ContactNumber { get; set; }= string.Empty;
         public string? Country { get; set; } = string.Empty;

@@ -23,6 +23,7 @@ namespace FindJobWebApi.Services
 
             if(!string.IsNullOrEmpty(dto.Description)) company.Description = dto.Description;
             if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
+            if (!string.IsNullOrEmpty(dto.Image)) company.Image = dto.Image;
 
             if (!string.IsNullOrEmpty(dto.Country)) company.Country = dto.Country;
             if (!string.IsNullOrEmpty(dto.City)) company.City = dto.City;

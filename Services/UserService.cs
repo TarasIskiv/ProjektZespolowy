@@ -104,6 +104,7 @@ namespace FindJobWebApi.Services
 
             if (!string.IsNullOrEmpty(dto.FirstName)) user.FirstName = dto.FirstName;
             if (!string.IsNullOrEmpty(dto.LastName)) user.LastName = dto.LastName;
+            if (!string.IsNullOrEmpty(dto.Image)) user.Image = dto.Image;
             if (!string.IsNullOrEmpty(dto.BirthdayDate.ToString())) user.BirthdayDate = dto.BirthdayDate;
             if (!string.IsNullOrEmpty(dto.ContactNumber)) user.ContactNumber = dto.ContactNumber;
 
