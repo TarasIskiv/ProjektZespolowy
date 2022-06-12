@@ -3,23 +3,25 @@ import Background from "../components/Background";
 import Footer from "../components/Footer";
 import styles from '../styles/pages/SearchPage.module.scss';
 import {BiFilterAlt} from "react-icons/bi";
+import {BsSearch} from "react-icons/bs";
 import {MdSort} from "react-icons/md";
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router";
-import JobApi from '../api/JobApi';
-import SearchOfferRow from "../components/SearchOfferRow";
+import {useNavigate} from "react-router";
+import EmployeeApi from '../api/EmployeeApi';
+import SearchEmployeeRow from "../components/SearchEmployeeRow";
 import {connect} from "react-redux";
-import {setJob, setActiveJob} from "../actions/JobActions";
+import {setEmployee} from "../actions/EmployeeAction";
 
 
-const SearchOffersPage = (props) => {
+const SearchEmployeesPage = (props) => {
     const navigate = useNavigate();
     const [dropdown, setDropDown] = useState(false);
 
-    const [minSalary, setMinSalary] = useState('');
+    const [experience, setExperience] = useState('');
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [search, setSearch] = useState('');
+    const [gender, setGender] = useState('');
 
     const onClick = (e) => {
         setDropDown(!dropdown);
@@ -27,8 +29,8 @@ const SearchOffersPage = (props) => {
 
     const generateParams = () => {
         const params = {};
-        if(minSalary !== '')
-            params['minSalary'] = minSalary;
+        if(experience !== '')
+            params['experience'] = experience;
 
         if(country !== '')
             params['country'] = country;
@@ -39,18 +41,20 @@ const SearchOffersPage = (props) => {
         if(search !== '')
             params['search'] = search;
 
+        if(gender !== '')
+            params['gender'] = gender;
 
         return params;
     }
 
     useEffect(() => {
         const urlParams = new URLSearchParams(generateParams()).toString();
-        JobApi.searchOffers(urlParams).then(res => {
+        EmployeeApi.searchEmployees(urlParams).then(res => {
             console.log(res.data.data);
-            props.setJob(res.data.data);
+            props.setEmployee(res.data.data);
         }).catch(error => {
-            props.setJob(null);
-            props.setActiveJob(null);
+            props.setEmployee(null);
+            props.setActiveEmployee(null);
         });
 
         navigate({
@@ -59,17 +63,17 @@ const SearchOffersPage = (props) => {
         })
 
         console.log(props)
-    },[minSalary, country, city, search]);
+    },[experience, country, city, search, gender]);
 
 
     useEffect(async () => {
         const urlParams = new URLSearchParams(generateParams()).toString();
-        JobApi.searchOffers(urlParams).then(res => {
+        EmployeeApi.searchEmployees(urlParams).then(res => {
             console.log(res.data.data);
-            props.setJob(res.data.data);
+            props.setEmployee(res.data.data);
         }).catch(error => {
-            props.setJob(null);
-            props.setActiveJob(null);
+            props.setEmployee(null);
+            props.setActiveEmployee(null);
         });
 
     },[])
@@ -85,8 +89,8 @@ const SearchOffersPage = (props) => {
                         <BiFilterAlt onClick={onClick} />
                         <div className={`${(!dropdown ? styles.noneMenu : '')} ${styles.dropdown}`} >
                             <div>
-                                <p>Minimal salary</p>
-                                <input type='text' value={minSalary} onChange={(e) => setMinSalary(e.target.value)} />
+                                <p>Experience</p>
+                                <input type='number' value={experience} onChange={(e) => setExperience(e.target.value)} />
                             </div>
                             <div>
                                 <p>Country</p>
@@ -95,6 +99,10 @@ const SearchOffersPage = (props) => {
                             <div>
                                 <p>City</p>
                                 <input type='text' value={city} onChange={(e) => setCity(e.target.value)}/>
+                            </div>
+                            <div>
+                                <p>Gender</p>
+                                <input type='text' value={gender} onChange={(e) => setGender(e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -108,19 +116,19 @@ const SearchOffersPage = (props) => {
                 </div>
                 <div className={styles.main}>
                     <div className={styles.left}>
-                        { props.activeJob != null ? <>
+                        { props.activeEmployee != null ? <>
                             <img src='https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg' />
-                        <h2>{props.activeJob.title}</h2>
-                        <span>{props.activeJob.salary}$</span>
+                        <h2>{props.activeEmployee.firstName + " " + props.activeEmployee.lastName}</h2>
+                        <span>{props.activeEmployee.experience} years</span>
 
                         <h1>Description:</h1>
-                        <p>{props.activeJob.description}</p>
+                        <p>{props.activeEmployee.description}</p>
 
-                        <h1>Requirements:</h1>
-                        <p>{props.activeJob.requirements}</p>
+                        <h1>Email:</h1>
+                        <p>{props.activeEmployee.email}</p>
 
-                        <h1>Responsibilities:</h1>
-                        <p>{props.activeJob.responsibilities}</p>
+                        <h1>contactNumber:</h1>
+                        <p>{props.activeEmployee.contactNumber}</p>
                         </>
                             : <></>
                         }
@@ -128,12 +136,11 @@ const SearchOffersPage = (props) => {
                     </div>
                     <div className={styles.right}>
                         {
-                            (props.jobs != null) ?
-                            props.jobs.map(item => {
-                                return <SearchOfferRow {...item} />
+                            (props.employees != null) ? 
+                            props.employees.map(item => {
+                                return <SearchEmployeeRow {...item} />
                             })
-                            :
-                            <></>
+                            : <></>
                         }
 
                     </div>
@@ -148,9 +155,9 @@ const SearchOffersPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        jobs: state.jobReducer.jobs,
-        activeJob: state.jobReducer.activeJob
+        employees: state.employeeReducer.employees,
+        activeEmployee: state.employeeReducer.activeEmployee
     }
 }
 
-export default connect(mapStateToProps, { setJob, setActiveJob })(SearchOffersPage);
+export default connect(mapStateToProps, { setEmployee })(SearchEmployeesPage);
