@@ -11,12 +11,17 @@ const login = async (data) => {
 const getProfile = async () => {
     return await Api.get('/api/company/profile');
 }
+
 const getProfileById = async (id) => {
     return await Api.get('/api/company/' + id);
 }
 
 const getProfileData = async (id) => {
     return await Api.get(`/api/company/${id}/job`);
+}
+
+const getAll = async () => {
+    return await Api.get('/api/company/list');
 }
 
 const updateProfile = async (data) => {
@@ -29,6 +34,7 @@ const helper = {
     login: login,
     getProfile: getProfile,
     getProfileData: getProfileData,
+    getAll: getAll,
     updateProfile: updateProfile,
     getProfileById: getProfileById
 }

@@ -51,6 +51,8 @@ const SearchOffersPage = (props) => {
         JobApi.searchOffers(urlParams).then(res => {
             console.log(res.data.data);
             props.setJob(res.data.data);
+        }).catch(err => {
+            props.setJob(null);
         });
 
         navigate({
@@ -72,71 +74,72 @@ const SearchOffersPage = (props) => {
     },[])
 
     return (
-    <>
-        <Header />
-        <div className="container">
-            <div className="main-block">
-                <div className={styles.top}>
-                    <div className={` ${(dropdown ? styles.onClick : '')} ${styles.filter}`} >
-                        <p>Filter</p>
-                        <BiFilterAlt onClick={onClick} />
-                        <div className={`${(!dropdown ? styles.noneMenu : '')} ${styles.dropdown}`} >
-                            <div>
-                                <p>Minimal salary</p>
-                                <input type='text' value={minSalary} onChange={(e) => setMinSalary(e.target.value)} />
-                            </div>
-                            <div>
-                                <p>Country</p>
-                                <input type='text' value={country} onChange={(e) => setCountry(e.target.value)} />
-                            </div>
-                            <div>
-                                <p>City</p>
-                                <input type='text' value={city} onChange={(e) => setCity(e.target.value)}/>
+        <>
+            <Header />
+            <div className="container">
+                <div className="main-block">
+                    <div className={styles.top}>
+                        <div className={` ${(dropdown ? styles.onClick : '')} ${styles.filter}`} >
+                            <p>Filter</p>
+                            <BiFilterAlt onClick={onClick} />
+                            <div className={`${(!dropdown ? styles.noneMenu : '')} ${styles.dropdown}`} >
+                                <div>
+                                    <p>Minimal salary</p>
+                                    <input type='text' value={minSalary} onChange={(e) => setMinSalary(e.target.value)} />
+                                </div>
+                                <div>
+                                    <p>Country</p>
+                                    <input type='text' value={country} onChange={(e) => setCountry(e.target.value)} />
+                                </div>
+                                <div>
+                                    <p>City</p>
+                                    <input type='text' value={city} onChange={(e) => setCity(e.target.value)}/>
+                                </div>
                             </div>
                         </div>
+                        <div className={styles.filter}>
+                            <p>Sort by</p>
+                            <MdSort />
+                        </div>
+                        <div className={styles.search}>
+                            <input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)}/>
+                        </div>
                     </div>
-                    <div className={styles.filter}>
-                        <p>Sort by</p>
-                        <MdSort />
-                    </div>
-                    <div className={styles.search}>
-                        <input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)}/>
-                    </div>
-                </div>
-                <div className={styles.main}>
-                    <div className={styles.left}>
-                        { props.activeJob !== undefined ? <>
-                            <img src='https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg' />
-                        <h2>{props.activeJob.title}</h2>
-                        <span>{props.activeJob.salary}$</span>
+                    <div className={styles.main}>
+                        <div className={styles.left}>
+                            { props.activeJob !== undefined ? <>
+                                    <img src='https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg' />
+                                    <h2>{props.activeJob.title}</h2>
+                                    <a href={`/company/${props.activeJob.company.id}`}>{props.activeJob.company.companyName}</a>
+                                    <span>{props.activeJob.salary}$</span>
 
-                        <h1>Description:</h1>
-                        <p>{props.activeJob.description}</p>
+                                    <h1>Description:</h1>
+                                    <p>{props.activeJob.description}</p>
 
-                        <h1>Requirements:</h1>
-                        <p>{props.activeJob.requirements}</p>
+                                    <h1>Requirements:</h1>
+                                    <p>{props.activeJob.requirements}</p>
 
-                        <h1>Responsibilities:</h1>
-                        <p>{props.activeJob.responsibilities}</p>
-                        </>
-                            : <></>
-                        }
+                                    <h1>Responsibilities:</h1>
+                                    <p>{props.activeJob.responsibilities}</p>
+                                </>
+                                : <></>
+                            }
 
-                    </div>
-                    <div className={styles.right}>
-                        {
-                            props.jobs.map(item => {
-                                return <SearchOfferRow {...item} />
-                            })
-                        }
+                        </div>
+                        <div className={styles.right}>
+                            {
+                                props.jobs !== null ? props.jobs.map(item => {
+                                    return <SearchOfferRow {...item} />
+                                }) : <></>
+                            }
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <Background />
-        <Footer />
-    </>
+            <Background />
+            <Footer />
+        </>
     );
 }
 

@@ -13,6 +13,10 @@ const getProfile = async () => {
     return await Api.get('/api/user/profile');
 }
 
+const updateProfile = async (data) => {
+    return await Api.post(`/api/user/profile`, data);
+}
+
 const getCV = async (data) => {
     return await Api.post('/api/user/cv', data, { responseType: 'blob'});
 }
@@ -25,6 +29,7 @@ const helper = {
     registerAccount: registerAccount,
     login: login,
     getProfile: getProfile,
+    updateProfile: updateProfile,
     getCV: getCV,
     test: test
 }

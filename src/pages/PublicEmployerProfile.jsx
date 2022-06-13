@@ -17,17 +17,18 @@ const PublicEmployerProfile = () => {
         })
     }, []);
 
-
     return (
         <>
             <Header />
             <div className="container">
                 <div className={styles.main}>
                     <div className={styles.info}>
-                        <img src='https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg' />
+                        <img src={data.image} />
                         <div>
                             <h1>{data.companyName}</h1>
-                            <Button text='View web site' />
+                            <Button text='View web site' onClick={() => {
+                                window.location = 'https://' + data.website;
+                            }} />
                         </div>
                     </div>
                     <div className={styles.description}>
