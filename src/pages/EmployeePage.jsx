@@ -24,6 +24,8 @@ const EmployeePage = () => {
             setPhone(info.contactNumber);
             setCity(info.city);
             setCountry(info.country);
+            setExperience(info.experience);
+            setDescription(info.desciption);
             if(info.image !== null)
                 setImage(info.image);
             else
@@ -47,6 +49,8 @@ const EmployeePage = () => {
     const [phone, setPhone] = useState('');
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
+    const [experience, setExperience] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const inputFile = useRef(null);
 
@@ -160,6 +164,32 @@ const EmployeePage = () => {
                                 name={"city"}
                                 type={'text'}
                                 onChange={(e) => setCity(e.target.value)}/>
+                            <AiOutlineEdit size={16} />
+                        </div>
+                    </div>
+                    <div className={style.field}>
+                        <p>Experience:</p>
+                        <div className={style.inputEdit}>
+                            <input
+                                onBlur={onBlur}
+                                autoComplete={"qwe"}
+                                value={experience}
+                                name={"experience"}
+                                type={'text'}
+                                onChange={(e) => setExperience(e.target.value)}/>
+                            <AiOutlineEdit size={16} />
+                        </div>
+                    </div>
+                    <div className={style.field}>
+                        <p>Description:</p>
+                        <div className={style.inputEdit}>
+                            <input
+                                onBlur={onBlur}
+                                autoComplete={"qwe"}
+                                value={description}
+                                name={"desciption"}
+                                type={'text'}
+                                onChange={(e) => setDescription(e.target.value)}/>
                             <AiOutlineEdit size={16} />
                         </div>
                     </div>

@@ -55,7 +55,7 @@ const Header = (props) => {
                   props.role == 'User' ?
                   <>
                     <Link to="/search-offers"><Button text="Search offers" /></Link>
-                    <Link to=""><Button text="Search companies" /></Link>
+                    <Link to="/search-company"><Button text="Search companies" /></Link>
                   </>
                   :
                   <>

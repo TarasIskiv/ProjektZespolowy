@@ -18,7 +18,7 @@ const SearchOfferRow = props => {
 
     return (
         <div className={style.row} onClick={onClick}>
-            <img src="https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg" alt="Logo" />
+            <img src={props.company.image} />
             <div className={style.info}>
                 <span>{props.title}</span>
                 <span>{props.company.companyName}</span>

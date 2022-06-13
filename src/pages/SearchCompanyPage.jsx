@@ -14,6 +14,7 @@ import SearchOfferRow from "../components/SearchOfferRow";
 import {connect} from "react-redux";
 import {setJob} from "../actions/JobActions";
 import CompanySearchRow from "../components/CompanySearchRow";
+import JobApi from "../api/JobApi";
 
 
 const SearchOffersPage = (props) => {
@@ -35,6 +36,33 @@ const SearchOffersPage = (props) => {
         });
 
     },[])
+
+    const generateParams = () => {
+        const params = {};
+
+        if(search !== '')
+            params['search'] = search;
+
+        return params;
+    }
+
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(generateParams()).toString();
+        console.log(urlParams);
+        CompanyApi.search(urlParams).then(res => {
+            console.log(res.data.data);
+            setCompanies(res.data.data);
+        }).catch(error => {
+            setCompanies(null);
+            setActiveCompany(null);
+        });
+
+        navigate({
+            pathname: window.location.pathname,
+            search: '?' + urlParams
+        })
+    },[search]);
 
     return (
         <>

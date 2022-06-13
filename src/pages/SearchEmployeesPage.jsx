@@ -117,18 +117,19 @@ const SearchEmployeesPage = (props) => {
                 <div className={styles.main}>
                     <div className={styles.left}>
                         { props.activeEmployee != null ? <>
-                            <img src='https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg' />
+                            <img src={props.activeEmployee.image} />
                         <h2>{props.activeEmployee.firstName + " " + props.activeEmployee.lastName}</h2>
                         <span>{props.activeEmployee.experience} years</span>
 
                         <h1>Description:</h1>
-                        <p>{props.activeEmployee.description}</p>
+                        <p>{props.activeEmployee.desciption}</p>
 
                         <h1>Email:</h1>
                         <p>{props.activeEmployee.email}</p>
 
-                        <h1>contactNumber:</h1>
+                        <h1>Phone:</h1>
                         <p>{props.activeEmployee.contactNumber}</p>
+
                         </>
                             : <></>
                         }

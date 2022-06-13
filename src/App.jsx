@@ -18,6 +18,7 @@ const GenCVPage = React.lazy(() => import ('./pages/GenCVPage'));
 const ViewerPDF = React.lazy(() => import ('./pages/ViewerPDF'));
 const SearchOffersPage = React.lazy(() => import ('./pages/SearchOffersPage'));
 const SearchCompanyPage = React.lazy(() => import ('./pages/SearchCompanyPage'));
+const SearchEmployeesPage = React.lazy(() => import ('./pages/SearchEmployeesPage'));
 
 function App() {
   return (
@@ -32,8 +33,9 @@ function App() {
                     <Route path='/creatorcv' element={< GenCVPage />} />
                     <Route path='/viewer' element={< ViewerPDF />} />
                     <Route path='/company/:id' element={<CheckAuth><PublicEmployerProfile /></CheckAuth>} />
-                    <Route path='/search-offers' element={<SearchOfferPage />} />
-                    <Route path='/search-employees' element={<SearchEmployeePage />} />
+                    <Route path='/search-offers' element={<SearchOffersPage />} />
+                    <Route path='/search-employees' element={<SearchEmployeesPage />} />
+                    <Route path='/search-company' element={<SearchCompanyPage />} />
                 </Routes>
             </BrowserRouter>
         </React.Suspense>

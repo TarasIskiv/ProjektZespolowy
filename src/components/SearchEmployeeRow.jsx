@@ -18,7 +18,7 @@ const SearchEmployeeRow = props => {
 
     return (
         <div className={style.row} onClick={onClick}>
-            <img src="https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg" alt="Logo" />
+            <img src={props.image} />
             <div className={style.info}>
                 <span>{props.firstName + " " + props.lastName}</span>
                 <span>Experience: {props.experience} years</span>

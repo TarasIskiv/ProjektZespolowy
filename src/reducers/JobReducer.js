@@ -1,7 +1,7 @@
 import { jobTypes } from './constants';
 
 const INITIAL_STATE = {
-    jobs: [],
+    jobs: null,
     activeJob: null
 };
 

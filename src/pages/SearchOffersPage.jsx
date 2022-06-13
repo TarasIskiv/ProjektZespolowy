@@ -39,7 +39,6 @@ const SearchOffersPage = (props) => {
         if(search !== '')
             params['search'] = search;
 
-
         return params;
     }
 
@@ -98,26 +97,14 @@ const SearchOffersPage = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.filter}>
-                            <p>Sort by</p>
-                            <MdSort />
-                        </div>
                         <div className={styles.search}>
                             <input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)}/>
                         </div>
                     </div>
-                    <div className={styles.filter}>
-                        <p>Sort by</p>
-                        <MdSort />
-                    </div>
-                    <div className={styles.search}>
-                        <input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)}/>
-                    </div>
-                </div>
                 <div className={styles.main}>
                     <div className={styles.left}>
                         { props.activeJob != null ? <>
-                            <img src='https://jf-staeulalia.pt/img/other/23/collection-apple-logo-outline.jpg' />
+                            <img src={props.activeJob.company.image} />
                         <h2>{props.activeJob.title}</h2>
                         <span>{props.activeJob.salary}$</span>
 
@@ -136,14 +123,13 @@ const SearchOffersPage = (props) => {
                     </div>
                     <div className={styles.right}>
                         {
-                            (props.jobs != null) ?
+                            (props.jobs !== null) ?
                             props.jobs.map(item => {
                                 return <SearchOfferRow {...item} />
                             })
                             :
                             <></>
                         }
-
                         </div>
                     </div>
                 </div>

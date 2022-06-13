@@ -24,6 +24,10 @@ const getAll = async () => {
     return await Api.get('/api/company/list');
 }
 
+const search = async (params) => {
+    return await Api.get('/api/company/search?' + params);
+}
+
 const updateProfile = async (data) => {
     return await Api.post(`/api/company/profile`, data);
 }
@@ -32,6 +36,7 @@ const updateProfile = async (data) => {
 const helper = {
     registerAccount: registerAccount,
     login: login,
+    search:search,
     getProfile: getProfile,
     getProfileData: getProfileData,
     getAll: getAll,
