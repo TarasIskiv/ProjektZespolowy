@@ -52,7 +52,7 @@ const SignInPage = (props) => {
                     props.setError(true);
                 } else {
                     const errors = error.response.data.errors;
-                    props.setErrorText('error');
+                    props.setErrorText('Invalid login or password');
                     props.setError(true);
                 }
             });

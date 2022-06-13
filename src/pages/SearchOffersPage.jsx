@@ -75,27 +75,35 @@ const SearchOffersPage = (props) => {
     },[])
 
     return (
-    <>
-        <Header />
-        <div className="container">
-            <div className="main-block">
-                <div className={styles.top}>
-                    <div className={` ${(dropdown ? styles.onClick : '')} ${styles.filter}`} >
-                        <p>Filter</p>
-                        <BiFilterAlt onClick={onClick} />
-                        <div className={`${(!dropdown ? styles.noneMenu : '')} ${styles.dropdown}`} >
-                            <div>
-                                <p>Minimal salary</p>
-                                <input type='text' value={minSalary} onChange={(e) => setMinSalary(e.target.value)} />
+        <>
+            <Header />
+            <div className="container">
+                <div className="main-block">
+                    <div className={styles.top}>
+                        <div className={` ${(dropdown ? styles.onClick : '')} ${styles.filter}`} >
+                            <p>Filter</p>
+                            <BiFilterAlt onClick={onClick} />
+                            <div className={`${(!dropdown ? styles.noneMenu : '')} ${styles.dropdown}`} >
+                                <div>
+                                    <p>Minimal salary</p>
+                                    <input type='text' value={minSalary} onChange={(e) => setMinSalary(e.target.value)} />
+                                </div>
+                                <div>
+                                    <p>Country</p>
+                                    <input type='text' value={country} onChange={(e) => setCountry(e.target.value)} />
+                                </div>
+                                <div>
+                                    <p>City</p>
+                                    <input type='text' value={city} onChange={(e) => setCity(e.target.value)}/>
+                                </div>
                             </div>
-                            <div>
-                                <p>Country</p>
-                                <input type='text' value={country} onChange={(e) => setCountry(e.target.value)} />
-                            </div>
-                            <div>
-                                <p>City</p>
-                                <input type='text' value={city} onChange={(e) => setCity(e.target.value)}/>
-                            </div>
+                        </div>
+                        <div className={styles.filter}>
+                            <p>Sort by</p>
+                            <MdSort />
+                        </div>
+                        <div className={styles.search}>
+                            <input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)}/>
                         </div>
                     </div>
                     <div className={styles.filter}>
@@ -136,13 +144,13 @@ const SearchOffersPage = (props) => {
                             <></>
                         }
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <Background />
-        <Footer />
-    </>
+            <Background />
+            <Footer />
+        </>
     );
 }
 

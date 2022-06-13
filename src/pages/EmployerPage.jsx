@@ -1,10 +1,12 @@
 import OfferChanger from "../components/OfferChanger";
 import style from '../styles/components/profileInfo.module.scss';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {connect} from "react-redux";
 import { setProfile } from "../actions/CompanyActions";
 import { AiOutlineEdit } from "react-icons/ai";
 import CompanyApi from "../api/CompanyApi";
+import {Upload} from "upload-js";
+import UserApi from "../api/UserApi";
 
 
 const EmployerPage = (props) => {
@@ -17,6 +19,19 @@ const EmployerPage = (props) => {
     const [city, setCity] = useState('');
     const [website, setWebsite] = useState('');
     const [description, setDescription] = useState('');
+    const [image, setImage] = useState(null);
+    const inputFile = useRef(null);
+
+
+    const upload = new Upload({apiKey: "public_kW15arz5o6VQwfroqdzR5FnoKxiC"})
+    const uploadFile = upload.createFileInputHandler({
+        onUploaded: ({ fileUrl, fileId }) => {
+            console.log(fileUrl)
+            CompanyApi.updateProfile({ image: fileUrl });
+            setImage(fileUrl);
+            // alert(`File uploaded! ${fileUrl}`);
+        }
+    });
 
     useEffect(() => {
         const testData = CompanyApi.getProfile();
@@ -32,11 +47,14 @@ const EmployerPage = (props) => {
             setName(info.companyName);
             setWebsite(info.website);
             setDescription(info.description);
-            //if(info.companyAddress != null)
-               // setLocation(info.companyAddress);
+            setCity(info.city);
+            setCountry(info.country);
+
+            if(info.image !== null)
+                setImage(info.image);
+            else
+                setImage('https://upcdn.io/kW15arzBi8UXboQLBDzy48e');
         });
-
-
     },[]);
 
     const onOpenClick = () => {
@@ -46,15 +64,16 @@ const EmployerPage = (props) => {
     const onBlur = (e) => {
         const data = { [e.target.name]: e.target.value }
         CompanyApi.updateProfile(data)
-
-        console.log(e.target.value);
     }
-
 
     return (
         <>
             <h1>Company profile</h1>
-            <img src="https://thispersondoesnotexist.com/image" />
+            <img src={image} onClick={() => {
+                console.log('click')
+                inputFile.current.click()
+            }}/>
+            <input type='file' ref={inputFile} style={{display: 'none'}} onChange={uploadFile}/>
             <div className={`${style.profileInfo} ${isOpen ? style.isOpen : ''}`}>
                 <div className={`${style.fieldsList} ${isOpen ? style.hideItems : ''}`}>
                         <div className={style.field}>
@@ -103,7 +122,7 @@ const EmployerPage = (props) => {
                                     onBlur={onBlur} 
                                     autoComplete={"qwe"} 
                                     value={country}
-                                    name={"companyAddress"}
+                                    name={"country"}
                                     type={'text'} 
                                     onChange={(e) => setCountry(e.target.value)}/>
                                 <AiOutlineEdit size={16} />

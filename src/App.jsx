@@ -16,9 +16,8 @@ const ProfilePage = React.lazy(() => import ('./pages/ProfilePage'));
 const PublicEmployerProfile = React.lazy(() => import ('./pages/PublicEmployerProfile'));
 const GenCVPage = React.lazy(() => import ('./pages/GenCVPage'));
 const ViewerPDF = React.lazy(() => import ('./pages/ViewerPDF'));
-const SearchOfferPage = React.lazy(() => import ('./pages/SearchOffersPage'));
-const SearchEmployeePage = React.lazy(() => import ('./pages/SearchEmployeesPage'));
-
+const SearchOffersPage = React.lazy(() => import ('./pages/SearchOffersPage'));
+const SearchCompanyPage = React.lazy(() => import ('./pages/SearchCompanyPage'));
 
 function App() {
   return (
