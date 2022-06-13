@@ -29,7 +29,9 @@ const MainPage = (props) => {
                     <Button fontsize='24px' text='Create CV' /> 
                   </Link>
                 : 
-                <input placeholder='Search' />
+                <Link to="/search-employees">
+                  <Button text="Search employees" />
+                </Link>
               }
             </div>
         </section>

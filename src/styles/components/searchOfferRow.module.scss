@@ -10,6 +10,7 @@
     border: 1px solid $clr-blue-prim;
     background-color: $clr-white;
     transition: all 0.5s;
+    margin: 10px 0;
 
     &:hover {
         background-color: $clr-blue-prim;
@@ -64,7 +65,7 @@
         }
     }
 
-    @media (max-width: 510px) {
+    @media (max-width: 1000px) {
         flex-direction: column;
         align-items: center;
 

@@ -56,16 +56,8 @@
       justify-content: space-around;
       width: 100%;
 
-      input {
-        width: 200px;
-        padding: 8px 18px;
-        font-style: normal;
-        border-radius: 20px;
-        border: 1px solid green;
+      .search {
         margin: auto;
-      }
-      input:focus {
-        outline: none !important;
       }
 
       @media (max-width: 768px) {
@@ -74,7 +66,7 @@
         .switch {
           margin-bottom: 5px;
         }
-        input {
+        .search {
           margin-bottom: 5px;
         };
       }

@@ -18,4 +18,9 @@ const jobTypes = {
     setActiveJob: 'JOB/SET_ACTIVE_JOB'
 }
 
-export { mainTypes, companyTypes, jobTypes }
+const employeeTypes = {
+    setEmployee: 'JOB/SET_EMPLOYEE',
+    setActiveEmployee: 'JOB/SET_ACTIVE_EMPLOYEE'
+}
+
+export { mainTypes, companyTypes, jobTypes, employeeTypes }

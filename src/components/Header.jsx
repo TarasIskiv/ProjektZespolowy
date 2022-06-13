@@ -48,8 +48,20 @@ const Header = (props) => {
               </>
               :
               <>
-              <input placeholder='Search' />
+              {/* <input placeholder='Search' onKeyDown={onKeyDownSearch}/> */}
+              <div className={[style.buttons, style.search].join(" ")}></div>
               <div className={style.buttons}>
+                {
+                  props.role == 'User' ?
+                  <>
+                    <Link to="/search-offers"><Button text="Search offers" /></Link>
+                    <Link to=""><Button text="Search companies" /></Link>
+                  </>
+                  :
+                  <>
+                    <Link to="/search-employees"><Button text="Search employees" /></Link>
+                  </>
+                }
                 <Link to='/profile'><Button text="Profile" /></Link>
                 <Button text="Sign out" onClick={signOut} />
               </div>
