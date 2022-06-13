@@ -58,13 +58,13 @@ namespace FindJobWebApi.Services
             if (!string.IsNullOrEmpty(country))
             {
                 country = country.ToLower();
-                companies = companies.Where(x => !string.IsNullOrEmpty(x.Country) && x.Country.ToLower() == country).ToList();
+                companies = companies.Where(x => !string.IsNullOrEmpty(x.Country) && x.Country.ToLower().Contains(country)).ToList();
             }
 
             if (!string.IsNullOrEmpty(city))
             {
                 city = city.ToLower();
-                companies = companies.Where(x => !string.IsNullOrEmpty(x.City) && x.City.ToLower() == city).ToList();
+                companies = companies.Where(x => !string.IsNullOrEmpty(x.City) && x.City.ToLower().Contains(city)).ToList();
             }
 
             if (companies.Count == 0)
