@@ -21,6 +21,7 @@ const SearchEmployeeRow = props => {
             <img src={props.image} />
             <div className={style.info}>
                 <span>{props.firstName + " " + props.lastName}</span>
+                <span>{props.desciption}</span>
                 <span>Experience: {props.experience} years</span>
             </div>
             <div className={style.button}>
